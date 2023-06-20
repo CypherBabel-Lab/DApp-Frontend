@@ -1,2 +1,2 @@
 # DApp
-CBIndex DApp
+CBIndex DApp Frontend.
