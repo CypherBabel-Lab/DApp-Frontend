@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
 import InitMoney from '~/components/Label/IintMoney'
+import { useRouter } from 'next/router'
 const carInfo = [
   {
     headsculpture: (
@@ -365,7 +366,9 @@ const carInfo = [
     runtime: '10day',
   },
 ]
+const { Meta } = Card
 const PortfolioList = (props: any) => {
+  const router = useRouter()
   const { selectTabsKey } = props
   const [carLoading, setCarLoading] = useState<boolean>(true)
   useEffect(() => {
@@ -386,7 +389,7 @@ const PortfolioList = (props: any) => {
               style={{
                 width: 234,
                 height: 274,
-                marginTop: 16,
+                marginTop: 36,
                 marginLeft: 16,
                 cursor: 'pointer',
                 // backgroundColor: 'rbg(0,0,0,0.5)',
@@ -394,8 +397,21 @@ const PortfolioList = (props: any) => {
               hoverable={true}
               className="border bg-zinc-800 hover:border-emerald-400"
               loading={carLoading}
+              key={it.name}
+              // actions={[
+              //   <Button
+              //     style={{ lineHeight: '16px' }}
+              //     className="rounded-md bg-gradient-to-r from-gray-800 to-black px-4 py-2 text-white hover:opacity-90"
+              //   >
+              //     <span className="font-bold">Copy</span>
+              //   </Button>,
+              // ]}
             >
-              <div>
+              <div
+                onClick={() => {
+                  router.push('/portfolio')
+                }}
+              >
                 <div className="flex">
                   <div> {it.headsculpture}</div>
                   <div className="ml-3  flex flex-col">
@@ -422,7 +438,7 @@ const PortfolioList = (props: any) => {
                       <div className="text-2xl font-semibold">
                         <RiseFallLabel num={it.roi} after={'%'} />
                       </div>
-                      <div className="font-medium text-neutral-400">
+                      <div className="text-xs font-semibold text-neutral-400">
                         30D ROI
                       </div>
                     </div>
@@ -430,28 +446,39 @@ const PortfolioList = (props: any) => {
                       <div className="text-2xl font-semibold">
                         <RiseFallLabel num={it.pnl} />
                       </div>
-                      <div className="font-medium text-neutral-400">
+                      <div className="text-xs font-semibold text-neutral-400">
                         30D PNL
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-around">
-                    <div className="text-2xl font-semibold">
-                      <InitMoney num={it.nav} />
-                      <div className="font-medium text-neutral-400">Nav</div>
+                  <div className="mt-3 flex items-center justify-around">
+                    <div>
+                      <span className="text-2xl font-semibold">
+                        <InitMoney num={it.nav} />
+                      </span>
+                      <div className="text-xs font-semibold text-neutral-400">
+                        Nav
+                      </div>
                     </div>
                     <div>
                       <div className="text-2xl font-semibold">{it.runtime}</div>
-                      <div className="font-medium text-neutral-400">
+                      <div className="text-xs font-semibold text-neutral-400">
                         Runtime
                       </div>
                     </div>
                   </div>
                 </div>
-                <div style={{ float: 'right' }}>
-                  <Button>Copy</Button>
-                </div>
               </div>
+              {/* <Meta
+                description={
+                  <Button
+                    style={{ lineHeight: '16px' }}
+                    className="rounded-md bg-gradient-to-r from-gray-800 to-black px-4 py-2 text-white hover:opacity-90"
+                  >
+                    <span className="font-bold">Copy</span>
+                  </Button>
+                }
+              /> */}
             </Card>
           )
         })}
