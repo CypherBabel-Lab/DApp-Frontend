@@ -1,13 +1,13 @@
 import { Button, Card } from 'antd'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import RiseFallLabel from '~/components/Label/RiseFallLabel'
+import InitMoney from '~/components/Label/IintMoney'
 const carInfo = [
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -17,17 +17,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -37,17 +35,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -57,17 +53,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -77,17 +71,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -97,17 +89,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -117,17 +107,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -137,17 +125,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -157,17 +143,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -177,17 +161,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -197,17 +179,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -217,17 +197,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -237,17 +215,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -257,17 +233,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -277,17 +251,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -297,17 +269,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -317,17 +287,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -337,17 +305,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -357,17 +323,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -377,17 +341,15 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
   {
     headsculpture: (
       <Image
-        src={
-          'https://assets.cbindex.finance/api/uploads/thumbnail/g6zffvxolh.jpg'
-        }
+        src="/images/123.jpg"
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
@@ -397,8 +359,8 @@ const carInfo = [
     name: 'Audi',
     address: '0x26...AAfA',
     peopleNum: '10',
-    roi: '10%',
-    pnl: '10%',
+    roi: 10,
+    pnl: 10,
     nav: '10',
     runtime: '10day',
   },
@@ -423,10 +385,14 @@ const PortfolioList = (props: any) => {
             <Card
               style={{
                 width: 234,
-                height: 254,
+                height: 274,
                 marginTop: 16,
                 marginLeft: 16,
+                cursor: 'pointer',
+                // backgroundColor: 'rbg(0,0,0,0.5)',
               }}
+              hoverable={true}
+              className="border bg-zinc-800 hover:border-emerald-400"
               loading={carLoading}
             >
               <div>
@@ -439,17 +405,52 @@ const PortfolioList = (props: any) => {
                     <span className="font-semibold text-zinc-400">
                       {it.address}
                     </span>
+                    <div className="flex">
+                      <Image
+                        src="/images/people.png"
+                        width={20}
+                        height={20}
+                        alt="img"
+                      />
+                      <span className="font-semibold">{it.peopleNum}</span>
+                    </div>
                   </div>
                 </div>
-                <div>{it.peopleNum}</div>
                 <div>
-                  {it.roi}
-                  {it.pnl}
+                  <div className="flex justify-around">
+                    <div>
+                      <div className="text-2xl font-semibold">
+                        <RiseFallLabel num={it.roi} after={'%'} />
+                      </div>
+                      <div className="font-medium text-neutral-400">
+                        30D ROI
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-semibold">
+                        <RiseFallLabel num={it.pnl} />
+                      </div>
+                      <div className="font-medium text-neutral-400">
+                        30D PNL
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-around">
+                    <div className="text-2xl font-semibold">
+                      <InitMoney num={it.nav} />
+                      <div className="font-medium text-neutral-400">Nav</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-semibold">{it.runtime}</div>
+                      <div className="font-medium text-neutral-400">
+                        Runtime
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  {it.nav} {it.runtime}
+                <div style={{ float: 'right' }}>
+                  <Button>Copy</Button>
                 </div>
-                <Button>Copy</Button>
               </div>
             </Card>
           )
