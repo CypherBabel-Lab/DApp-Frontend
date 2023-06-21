@@ -27,6 +27,7 @@
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",
     "react-intl": "^6.4.4",
+    "react-quill": "^2.0.0",
     "react-spring": "^9.7.1",
     "react-three-fiber": "^6.0.13",
     "react-transition-group": "^4.4.5",
