@@ -14,7 +14,6 @@ async function init() {
         </div>
       ),
       value: obj.address,
-      //   address:,
     }
   })
   console.log(newArray)
