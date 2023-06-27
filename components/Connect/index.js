@@ -10,7 +10,13 @@ import { Button } from 'antd'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { IFundDeployer } from '../../data/abis/IFundDeployer'
+import {
+  SupportedLocale,
+  SUPPORTED_LOCALES,
+  SwapWidget,
+} from '@uniswap/widgets'
+// import '@uniswap/widgets/dist/fonts.css'
+
 const daiAddress = '0x2662fA996a31A09A7987bf1fe218271B91cBAAfA'
 const daiAbi = [
   {
@@ -78,7 +84,7 @@ const wagmiConfig = createConfig({
   publicClient,
 })
 const ethereumClient = new EthereumClient(wagmiConfig, chains)
-
+let provider = ''
 const Connect = () => {
   const [signer, setSigner] = useState(null)
   const [daiContract, setDaiContract] = useState(null)
@@ -105,8 +111,6 @@ const Connect = () => {
       ['address[]', 'bytes[]'],
       [['0x09d98A5bb4eC2deE15B35a5a0be051E1d62fFd8e'], [fee]]
     )
-    console.log(encodedBytes)
-
     const fundOwner = '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2' // 基金拥有者的地址
     const fundName = '123' // 基金名称
     const fundSymbol = '123' // 基金代号
@@ -139,7 +143,7 @@ const Connect = () => {
   async function getSigner() {
     if (window.ethereum) {
       await window.ethereum.enable()
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       setSigner(signer)
       const contract = new ethers.Contract(daiAddress, daiAbi, provider)
@@ -160,6 +164,9 @@ const Connect = () => {
 
   return (
     <>
+      {/* <div className="Uniswap"> */}
+      {/* <SwapWidget provider={provider} /> */}
+      {/* </div> */}
       <Button onClick={() => createNewFund()}>创建基金</Button>
       <WagmiConfig config={wagmiConfig}>
         <Web3Button />

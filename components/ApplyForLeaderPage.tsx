@@ -22,6 +22,8 @@ const ApplyForLeaderPage = () => {
   const [previewTitle, setPreviewTitle] = useState('')
   const [describeValue, setDescribeValue] = useState('')
   const [fileList, setFileList] = useState<UploadFile[]>([])
+  const [name, setName] = useState('')
+  const [symbol, setSymbol] = useState('')
   const handleCancel = () => setPreviewOpen(false)
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -49,35 +51,15 @@ const ApplyForLeaderPage = () => {
         className="rounded-2xl bg-zinc-800"
       >
         <div>
-          头像:
-          <>
-            <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture-circle"
-              // fileList={fileList}
-              onPreview={handlePreview}
-              onChange={handleChange}
-            >
-              <PlusOutlined />
-              Upload
-            </Upload>
-            <Modal
-              open={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={handleCancel}
-            >
-              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
-          </>
+          Name: <Input />
         </div>
         <div>
-          Name: <Input />
+          Symbol: <Input />
         </div>
         <div>
           底层资产
           <Select
-            defaultValue={{ value: 'USDT', label: 'USDT' }}
+            // defaultValue={{ value: 'USDT', label: 'USDT' }}
             style={{ width: 120 }}
             onChange={handleChange}
             options={[
@@ -85,16 +67,6 @@ const ApplyForLeaderPage = () => {
               { value: 'BTC', label: 'BTC' },
               { value: 'ETH', label: 'ETH' },
             ]}
-          />
-        </div>
-        <div>
-          描述
-          <ReactQuill
-            style={{ height: '200px' }}
-            theme="snow"
-            value={describeValue}
-            onChange={setDescribeValue}
-            //   className="ql-editor"
           />
         </div>
         <div className="mt-14">

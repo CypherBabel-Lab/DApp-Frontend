@@ -8,7 +8,7 @@ const Sidbar = (props: any) => {
     <>
       <SectionContainer>
         <div className="flex lg:gap-16 lg:space-y-0 xl:gap-16">
-          <div className="rounded-lg bg-slate-700 p-4 lg:col-span-4 xl:col-span-3 w-72">
+          <div className="w-72 rounded-lg bg-slate-700 p-4 lg:col-span-4 xl:col-span-3">
             <div>
               <div className="hidden lg:block">
                 <div className="space-y-1">
@@ -45,6 +45,12 @@ const Sidbar = (props: any) => {
                   >
                     Ducumentary
                   </button>
+                  <button
+                    onClick={() => router.push('/swap')}
+                    className="block text-base text-scale-1100"
+                  >
+                    Swap
+                  </button>
                 </div>
               </div>
               <div className="mt-0 lg:mt-96">
@@ -54,7 +60,7 @@ const Sidbar = (props: any) => {
                     color="blue"
                     description="Create an CBIndex vault and start managing your assets."
                     // href={`/vault/create`}
-                    href={`/apply-for-leader`}
+                    href={`/individualfunds`}
                     icon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
