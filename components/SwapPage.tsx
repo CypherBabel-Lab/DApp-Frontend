@@ -4,6 +4,7 @@ import qs from 'qs'
 import { LimitOrder, SignatureType } from '@0x/protocol-utils'
 import { ethers } from 'ethers'
 import { BigNumber } from '@0x/utils'
+import { scenarioAsync } from './LimitOrder/test'
 async function init() {
   let response = await fetch('https://tokens.coingecko.com/uniswap/all.json')
   let tokenListJSON = await response.json()
@@ -154,7 +155,7 @@ const SwapPage = () => {
           <Select onChange={buyChangeEvt} options={selectTokenList} />
           <InputNumber />
         </div>
-        <Button onClick={() => sign()}>Sign</Button>
+        <Button onClick={() => scenarioAsync()}>Sign</Button>
       </div>
     </>
   )

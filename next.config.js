@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  resolve: {
+    fallback: {
+      // 👇️👇️👇️ add this 👇️👇️👇️
+      fs: false,
+      os: false,
+      path: false,
+    },
+  },
+
   reactStrictMode: true,
   images: {
     domains: ['assets.cbindex.finance'],
@@ -28,3 +37,6 @@ module.exports = {
     ]
   },
 }
+// module.exports = function (webpackEnv) {
+
+// }
