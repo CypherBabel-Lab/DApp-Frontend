@@ -89,17 +89,6 @@ const Connect = () => {
   const [signer, setSigner] = useState(null)
   const [daiContract, setDaiContract] = useState(null)
   const { setTheme } = useWeb3ModalTheme()
-  function enCodeFunc(fee, address, contractAddressArray) {
-    const feeArray = ethers.utils.defaultAbiCoder.encode(
-      ['uint256', 'address'],
-      [fee, address]
-    )
-    const encodedBytes = ethers.utils.defaultAbiCoder.encode(
-      ['address[]', 'bytes[]'],
-      [[...contractAddressArray], [feeArray]]
-    )
-    return encodedBytes
-  }
   async function createNewFund() {
     const fee = ethers.utils.defaultAbiCoder.encode(
       ['uint256', 'address'],
@@ -134,7 +123,6 @@ const Connect = () => {
             { gasLimit: 21000000 }
           )
         const receipt = await transaction.wait()
-        console.log(receipt)
       }
     } catch (error) {
       console.log('交互错误:', error)

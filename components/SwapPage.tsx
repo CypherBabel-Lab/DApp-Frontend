@@ -1,7 +1,9 @@
 import { Button, Select, InputNumber } from 'antd'
 import React, { useEffect, useState } from 'react'
 import qs from 'qs'
+import { LimitOrder, SignatureType } from '@0x/protocol-utils'
 import { ethers } from 'ethers'
+import { BigNumber } from '@0x/utils'
 async function init() {
   let response = await fetch('https://tokens.coingecko.com/uniswap/all.json')
   let tokenListJSON = await response.json()
@@ -50,14 +52,15 @@ const SwapPage = () => {
   const [sellAddress, setSellAddress] = useState('')
   const [buyAddress, setBuyAddress] = useState('')
   const [sellAmount, setSellAmount] = useState(0)
+
   async function sign() {
-    const utils = require('@0x/protocol-utils')
     const contractAddresses = require('@0x/contract-addresses')
     const { MetamaskSubprovider } = require('@0x/subproviders')
 
     const CHAIN_ID = 1
     const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
-    const addresses = contractAddresses.getContractAddressesForChainOrThrow(1)
+    const addresses =
+      contractAddresses.getContractAddressesForChainOrThrow(CHAIN_ID)
 
     const getFutureExpiryInSeconds = () =>
       Math.floor(Date.now() / 1000 + 300).toString() // 5 min expiry
@@ -70,26 +73,29 @@ const SwapPage = () => {
     const maker = accounts[0]
 
     // Sign order
-    const order = new utils.LimitOrder({
+    const order = new LimitOrder({
       makerToken: addresses.etherToken,
       takerToken: addresses.zrxToken,
-      makerAmount: '1', // NOTE: This is 1 WEI, 1 ETH would be 1000000000000000000
-      takerAmount: '1000000000000000', // NOTE this is 0.001 ZRX. 1 ZRX would be 1000000000000000000
+      makerAmount: new BigNumber('1'), // NOTE: This is 1 WEI, 1 ETH would be 1000000000000000000
+      takerAmount: new BigNumber('1000000000000000'), // NOTE this is 0.001 ZRX. 1 ZRX would be 1000000000000000000
       maker: maker,
       sender: NULL_ADDRESS,
-      expiry: getFutureExpiryInSeconds(),
-      salt: Date.now().toString(),
+      expiry: new BigNumber(getFutureExpiryInSeconds()),
+      salt: new BigNumber(Date.now().toString()),
       chainId: CHAIN_ID,
       verifyingContract: addresses.exchangeProxy,
     })
     console.log(order)
 
     const supportedProvider = new ethers.providers.Web3Provider(window.ethereum)
+    console.log(supportedProvider)
 
     const signature = await order.getSignatureWithProviderAsync(
       supportedProvider,
-      utils.SignatureType.EIP712 // Optional
+      SignatureType.EIP712 // Optional
     )
+    console.log(signature)
+
     console.log(`Signature: ${JSON.stringify(signature, undefined, 2)}`)
 
     const signedOrder = { ...order, signature }
@@ -100,6 +106,7 @@ const SwapPage = () => {
         'Content-Type': 'application/json',
       },
     })
+    console.log(resp)
 
     if (resp.status === 200) {
       alert('Successfully posted order to SRA')

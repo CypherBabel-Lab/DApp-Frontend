@@ -7,14 +7,189 @@ import CurrentPositions from '~/components/protfolioTabs/CurrentPositions'
 import TradeHistory from '~/components/protfolioTabs/TradeHistory'
 import StatisticalData from '~/components/protfolioTabs/StatisticalData'
 import DepositsAndWithdrawals from '~/components/protfolioTabs/DepositsAndWithdrawals'
+import GuardianLogic from '../data/GuardianLogic.json'
+import { ethers } from 'ethers'
 const { Meta } = Card
-
+let provider
+const mtAbi = [
+  {
+    constant: true,
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: 'guy', type: 'address' },
+      { name: 'wad', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: 'src', type: 'address' },
+      { name: 'dst', type: 'address' },
+      { name: 'wad', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [{ name: 'wad', type: 'uint256' }],
+    name: 'withdraw',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', type: 'uint8' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [{ name: '', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: 'dst', type: 'address' },
+      { name: 'wad', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
+    inputs: [],
+    name: 'deposit',
+    outputs: [],
+    payable: true,
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [
+      { name: '', type: 'address' },
+      { name: '', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  { payable: true, stateMutability: 'payable', type: 'fallback' },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'src', type: 'address' },
+      { indexed: true, name: 'guy', type: 'address' },
+      { indexed: false, name: 'wad', type: 'uint256' },
+    ],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'src', type: 'address' },
+      { indexed: true, name: 'dst', type: 'address' },
+      { indexed: false, name: 'wad', type: 'uint256' },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'dst', type: 'address' },
+      { indexed: false, name: 'wad', type: 'uint256' },
+    ],
+    name: 'Deposit',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'src', type: 'address' },
+      { indexed: false, name: 'wad', type: 'uint256' },
+    ],
+    name: 'Withdrawal',
+    type: 'event',
+  },
+]
 const PortfolioList = () => {
+  const [signer, setSigner] = useState(undefined)
+  const [daiContract, setDaiContract] = useState(null)
+
   const onChange = (key: string) => {
     console.log(key)
   }
+  async function getSigner() {
+    if (window.ethereum) {
+      await window.ethereum.enable()
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      setSigner(signer)
+      const contract = new ethers.Contract(
+        '0xfdfa52c120095993bce91cac1da2443765c0c239',
+        GuardianLogic.abi,
+        provider
+      )
+      console.log(contract)
+
+      setDaiContract(contract)
+    }
+  }
   const [loading, setLoading] = useState(true)
   useEffect(() => {
+    getSigner()
     setTimeout(() => {
       setLoading(false)
     }, 1500)
@@ -41,6 +216,37 @@ const PortfolioList = () => {
       children: <DepositsAndWithdrawals />,
     },
   ]
+  const DepositEvt = async () => {
+    const wmaticContract = new ethers.Contract(
+      '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889', //mtAddress
+      mtAbi, //mtABi
+      signer
+    )
+    const amountToApprove = ethers.constants.MaxUint256
+
+    const investmentAmount = 2
+    const minSharesQuantity = 1
+
+    try {
+      if (signer && daiContract) {
+        // empower wmt
+        const approveTx = await wmaticContract.approve(
+          '0xfdfa52c120095993bce91cac1da2443765c0c239', //
+          amountToApprove
+        )
+        await approveTx.wait()
+        const transaction = await daiContract
+          .connect(signer)
+          .buyShares(investmentAmount, minSharesQuantity, {
+            gasLimit: 21000000,
+          })
+        const receipt = await transaction.wait()
+        console.log(receipt)
+      }
+    } catch (error) {
+      console.log('交互错误:', error)
+    }
+  }
   return (
     <div>
       <div className="pt-6">
@@ -59,7 +265,9 @@ const PortfolioList = () => {
               title="Audi"
               description="0x26...AAfA"
             />
-            <div>跟单者，请耐心 Twitter搜索：@dingfengbo2026</div>
+            <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
+              Deposit
+            </Button>
             <div className="mb-[12px] mt-[12px] grid grid-cols-2 items-end gap-[16px] md:mb-[24px] md:mt-[24px] md:grid-cols-3 lg:grid-cols-4">
               <div>
                 <div className="text-t-sell text-[20px] font-medium">
