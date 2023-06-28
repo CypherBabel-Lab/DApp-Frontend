@@ -1,7 +1,7 @@
 import { Button, Select, InputNumber } from 'antd'
 import React, { useEffect, useState } from 'react'
 import qs from 'qs'
-
+import { ethers } from 'ethers'
 async function init() {
   let response = await fetch('https://tokens.coingecko.com/uniswap/all.json')
   let tokenListJSON = await response.json()
@@ -43,44 +43,6 @@ async function getSellSwapPrice(sell: string, buy: string, sellAmount: number) {
     // 处理接口请求错误
   }
 }
-async function getQuote(
-  sell: string,
-  buy: string,
-  sellAmount: number,
-  account: string
-) {
-  console.log('Getting Quote')
-
-  const params = {
-    sellToken: sell,
-    buyToken: buy,
-    sellAmount: sellAmount,
-    // Set takerAddress to account
-    takerAddress: account,
-  }
-
-  const headers = { '0x-api-key': '[2553fb72-59f8-423d-b067-a0e07e6ccbf3]' } // This is a placeholder. Get your live API key from the 0x Dashboard (https://dashboard.0x.org/apps)
-
-  // Fetch the swap quote.
-  const response = await fetch(
-    `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`,
-    { headers }
-  )
-
-  let swapQuoteJSON = await response.json()
-  console.log('Quote: ', swapQuoteJSON)
-
-  return swapQuoteJSON
-}
-async function trySwap(sell: string, buy: string, sellAmount: number) {
-  // The address, if any, of the most recently used account that the caller is permitted to access
-  let accounts = await window.ethereum.request({ method: 'eth_accounts' })
-  let takerAddress = accounts[0]
-  // Log the the most recently used address in our MetaMask wallet
-  console.log('takerAddress: ', takerAddress)
-  // Pass this as the account param into getQuote() we built out earlier. This will return a JSON object trade order.
-  const swapQuoteJSON = await getQuote(sell, buy, sellAmount, takerAddress)
-}
 const SwapPage = () => {
   const [selectTokenList, setSelectTokenList] = useState([])
   const [sell, setSell] = useState('')
@@ -88,6 +50,70 @@ const SwapPage = () => {
   const [sellAddress, setSellAddress] = useState('')
   const [buyAddress, setBuyAddress] = useState('')
   const [sellAmount, setSellAmount] = useState(0)
+  async function sign() {
+    const utils = require('@0x/protocol-utils')
+    const contractAddresses = require('@0x/contract-addresses')
+    const { MetamaskSubprovider } = require('@0x/subproviders')
+
+    const CHAIN_ID = 1
+    const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+    const addresses = contractAddresses.getContractAddressesForChainOrThrow(1)
+
+    const getFutureExpiryInSeconds = () =>
+      Math.floor(Date.now() / 1000 + 300).toString() // 5 min expiry
+
+    // Unlock metamask
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+    })
+    // Use first selected Metamask account
+    const maker = accounts[0]
+
+    // Sign order
+    const order = new utils.LimitOrder({
+      makerToken: addresses.etherToken,
+      takerToken: addresses.zrxToken,
+      makerAmount: '1', // NOTE: This is 1 WEI, 1 ETH would be 1000000000000000000
+      takerAmount: '1000000000000000', // NOTE this is 0.001 ZRX. 1 ZRX would be 1000000000000000000
+      maker: maker,
+      sender: NULL_ADDRESS,
+      expiry: getFutureExpiryInSeconds(),
+      salt: Date.now().toString(),
+      chainId: CHAIN_ID,
+      verifyingContract: addresses.exchangeProxy,
+    })
+    console.log(order)
+
+    const supportedProvider = new ethers.providers.Web3Provider(window.ethereum)
+
+    const signature = await order.getSignatureWithProviderAsync(
+      supportedProvider,
+      utils.SignatureType.EIP712 // Optional
+    )
+    console.log(`Signature: ${JSON.stringify(signature, undefined, 2)}`)
+
+    const signedOrder = { ...order, signature }
+    const resp = await fetch('https://ropsten.api.0x.org/sra/v4/order', {
+      method: 'POST',
+      body: JSON.stringify(signedOrder),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (resp.status === 200) {
+      alert('Successfully posted order to SRA')
+    } else {
+      const body = await resp.json()
+      alert(
+        `ERROR(status code ${resp.status}): ${JSON.stringify(
+          body,
+          undefined,
+          2
+        )}`
+      )
+    }
+  }
   useEffect(() => {
     const fetchTokenList = async () => {
       const tokenList = await init()
@@ -121,6 +147,7 @@ const SwapPage = () => {
           <Select onChange={buyChangeEvt} options={selectTokenList} />
           <InputNumber />
         </div>
+        <Button onClick={() => sign()}>Sign</Button>
       </div>
     </>
   )
