@@ -6,6 +6,8 @@ module.exports = {
       fs: false,
       os: false,
       path: false,
+      child_process: false,
+      module: false,
     },
   },
 

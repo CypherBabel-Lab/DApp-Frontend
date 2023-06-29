@@ -27,6 +27,7 @@ import {
 export async function scenarioAsync(): Promise<void> {
   await runMigrationsOnceIfRequiredAsync()
   PrintUtils.printScenario('Fill ERC20 Limit Order')
+  // debugger
   //初始化ContractWrappers，这提供了有关调用的辅助函数
   //0x合约以及区块链上的ERC20/ERC721代币合约
   const contractWrappers = new ContractWrappers(providerEngine, {
@@ -36,9 +37,9 @@ export async function scenarioAsync(): Promise<void> {
   //账户信息、余额、一般合同日志
   const web3Wrapper = new Web3Wrapper(providerEngine)
   const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync()
-  const exchangeProxyAddress = contractWrappers.contractAddresses.exchangeProxy
-  const zrxTokenAddress = contractWrappers.contractAddresses.zrxToken
-  const etherTokenAddress = contractWrappers.contractAddresses.etherToken
+  // const exchangeProxyAddress = contractWrappers.contractAddresses.exchangeProxy
+  const zrxTokenAddress = '0x138c2f1123cf3f82e4596d097c118eac6684940b'
+  const etherTokenAddress = '0x1dea979ae76f26071870f824088da78979eb91c8'
   const printUtils = new PrintUtils(
     web3Wrapper,
     contractWrappers,
@@ -178,14 +179,14 @@ export async function scenarioAsync(): Promise<void> {
   providerEngine.stop()
 }
 
-void (async () => {
-  try {
-    if (!module.parent) {
-      await scenarioAsync()
-    }
-  } catch (e) {
-    console.log(e)
-    providerEngine.stop()
-    process.exit(1)
-  }
-})()
+// void (async () => {
+//   try {
+//     if (!module.parent) {
+//       await scenarioAsync()
+//     }
+//   } catch (e) {
+//     console.log(e)
+//     providerEngine.stop()
+//     process.exit(1)
+//   }
+// })()

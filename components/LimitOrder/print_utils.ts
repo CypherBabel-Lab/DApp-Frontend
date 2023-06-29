@@ -17,8 +17,8 @@ import {
   LogWithDecodedArgs,
   TransactionReceiptWithDecodedLogs,
 } from 'ethereum-types'
-import * as _ from 'lodash'
-import ora = require('ora')
+import _ from 'lodash'
+import ora from 'ora'
 
 import { DECIMALS, UNLIMITED_ALLOWANCE_IN_BASE_UNITS } from './constants'
 
@@ -129,6 +129,8 @@ export class PrintUtils {
     this._web3Wrapper = web3Wrapper
     this._accounts = accounts
     this._tokens = tokens
+    console.log(contractWrappers)
+    // debugger
     this._web3Wrapper.abiDecoder.addABI(contractWrappers.exchange.abi)
     this._web3Wrapper.abiDecoder.addABI(contractWrappers.weth9.abi)
     this._web3Wrapper.abiDecoder.addABI(ERC721TokenContract.ABI())

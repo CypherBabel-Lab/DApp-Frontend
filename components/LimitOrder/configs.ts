@@ -1,9 +1,13 @@
 import * as dotenv from 'dotenv'
-dotenv.config()
+// dotenv.config()
+export interface NetworkSpecificConfigs {
+  rpcUrl: string
+  networkId: number
+  chainId: number
+}
 
 import { GANACHE_NETWORK_ID, ROPSTEN_NETWORK_ID } from './constants'
-import { NetworkSpecificConfigs } from './types'
-
+// import { NetworkSpecificConfigs } from './types'
 export const TX_DEFAULTS = { gas: 800000, gasPrice: 20e9 }
 export const MNEMONIC =
   'concert load couple harbor equip island argue ramp clarify fence smart topic'

@@ -15,9 +15,12 @@
   "browser": {
     "fs": false,
     "os": false,
-    "path": false
+    "path": false,
+    "child_process": false,
+    "module": false
   },
   "dependencies": {
+    "@0x/migrations": "^8.1.19",
     "@0x/protocol-utils": "^11.22.2",
     "@nextui-org/react": "^1.0.0-beta.13",
     "@radix-ui/colors": "^0.1.8",
@@ -27,6 +30,7 @@
     "@web3modal/ethereum": "^2.4.7",
     "@web3modal/react": "^2.4.7",
     "antd": "^5.6.1",
+    "axios-mock-adapter": "^1.21.5",
     "classnames": "^2.3.1",
     "cli-table": "^0.3.11",
     "ethers": "^5.7.0",
@@ -45,6 +49,7 @@
     "swiper": "^8.0.7",
     "three": "^0.153.0",
     "use-debounce": "^7.0.1",
+    "uws": "^200.0.0",
     "viem": "^1.0.7",
     "wagmi": "^1.2.0"
   },

@@ -1,5 +1,11 @@
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet, polygon, arbitrumGoerli } from 'wagmi/chains'
+import {
+  arbitrum,
+  mainnet,
+  polygon,
+  arbitrumGoerli,
+  polygonMumbai,
+} from 'wagmi/chains'
 import {
   Web3Button,
   Web3Modal,
@@ -74,7 +80,7 @@ const daiAbi = [
     type: 'function',
   },
 ]
-const chains = [arbitrum, mainnet, polygon, arbitrumGoerli]
+const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
 const projectId = 'bce62feae59107ac8ebbdc9aa8810513'
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
