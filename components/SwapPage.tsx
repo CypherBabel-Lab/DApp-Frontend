@@ -8,6 +8,10 @@ import { getContractAddressesForChainOrThrow } from '@0x/contract-addresses'
 import { Web3Wrapper } from '@0x/web3-wrapper'
 import { providerEngine } from '../components/LimitOrder/provider_engine'
 import GuardianLogic from '../data/GuardianLogic.json'
+function formatSelector(str: string) {
+  const bytes4 = ethers.utils.id(str)
+  return bytes4
+}
 
 async function init() {
   let response = await fetch('https://tokens.coingecko.com/uniswap/all.json')
@@ -27,7 +31,6 @@ async function init() {
 }
 async function getSellSwapPrice(sell: string, buy: string, sellAmount: number) {
   console.log(sellAmount)
-
   const params = {
     sellToken: sell,
     buyToken: buy,
@@ -51,8 +54,6 @@ async function getSellSwapPrice(sell: string, buy: string, sellAmount: number) {
 }
 let provider: any
 const SwapPage = () => {
-  // console.log(MetamaskSubprovider)
-
   const [selectTokenList, setSelectTokenList] = useState([])
   const [sell, setSell] = useState('')
   const [buy, setBuy] = useState('')
@@ -82,8 +83,8 @@ const SwapPage = () => {
     const CHAIN_ID = 80001
     const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
     const addresses = getContractAddressesForChainOrThrow(CHAIN_ID)
-    const getFutureExpiryInSeconds = () =>
-      Math.floor(Date.now() / 1000 + 300).toString() // 5 min expiry
+    const getFutureExpiryInSeconds = () => Math.floor(Date.now() / 1000 + 300) // 5 min expiry
+
     const web3Wrapper = new Web3Wrapper(providerEngine)
     // Unlock metamask
     const accounts = await window.ethereum.request({
@@ -105,32 +106,35 @@ const SwapPage = () => {
       chainId: CHAIN_ID,
       verifyingContract: addresses.exchangeProxy,
     })
-    // console.log(maker)
-    const functionSignature = 'takeOrder(address,bytes,bytes)'
-    const signatureBytes = ethers.utils.toUtf8Bytes(functionSignature)
-    const hash = ethers.utils.keccak256(signatureBytes)
-    const bytes4Signature = '0x' + hash.slice(2, 10)
+    const bytes4Signature = formatSelector('takeOrder(address,bytes,bytes)')
+    console.log(bytes4Signature)
+
     const signature = await data.getSignatureWithProviderAsync(
       web3Wrapper.getProvider(),
       SignatureType.EthSign,
       maker
     )
+    // console.log(ethers.utils.parseUnits('1').toNumber())
+
     const limitOrder = {
       makerToken: addresses.etherToken,
       takerToken: addresses.zrxToken,
-      makerAmount: '1000000000000000000', // 1 ETH
-      takerAmount: '2000000000000000000', // 1 ZRX
+      makerAmount: ethers.utils.parseUnits('1'), // 1 ETH
+      takerAmount: ethers.utils.parseUnits('1'), // 1 ZRX
       maker: maker,
-      sender: NULL_ADDRESS,
-      expiry: getFutureExpiryInSeconds().toString(),
-      salt: Date.now().toString(),
-      chainId: CHAIN_ID,
-      verifyingContract: addresses.exchangeProxy,
+      taker: NULL_ADDRESS,
+      txOrigin: NULL_ADDRESS,
+      // pool: ethers.utis.
+      pool: ethers.utils.formatBytes32String(''),
+      expiry: getFutureExpiryInSeconds(),
+      salt: Date.now(),
     }
+    console.log(signature)
+
     const encodedData = ethers.utils.defaultAbiCoder.encode(
       [
-        'tuple(address makerToken,address takerToken,string makerAmount ,string takerAmount,address maker,address sender,string expiry ,string salt ,uint256 chainId ,address verifyingContract) d',
-        'tuple(string r,string s, uint256 signatureType,uint256 v) d',
+        'tuple(address makerToken,address takerToken,uint128 makerAmount ,uint128 takerAmount,address maker,address taker, address txOrigin,bytes32 pool, uint64 expiry ,uint256 salt) d',
+        'tuple(uint8 signatureType,uint8 v,bytes32 r, bytes32 s) d',
       ],
       [
         {
@@ -139,33 +143,75 @@ const SwapPage = () => {
           makerAmount: limitOrder.makerAmount,
           takerAmount: limitOrder.takerAmount,
           maker: limitOrder.maker,
-          sender: limitOrder.sender,
+          taker: limitOrder.taker,
+          txOrigin: limitOrder.txOrigin,
+          pool: limitOrder.pool,
           expiry: limitOrder.expiry,
           salt: limitOrder.salt,
-          chainId: limitOrder.chainId,
-          verifyingContract: limitOrder.verifyingContract,
         },
         {
-          r: signature.r,
-          s: signature.s,
           signatureType: signature.signatureType,
           v: signature.v,
+          r: signature.r,
+          s: signature.s,
         },
       ]
     )
+    console.log(encodedData)
+
+    // const limitOrder = {
+    //   makerToken: addresses.etherToken,
+    //   takerToken: addresses.zrxToken,
+    //   makerAmount: '1000000000000000000', // 1 ETH
+    //   takerAmount: '2000000000000000000', // 1 ZRX
+    //   maker: maker,
+    //   sender: NULL_ADDRESS,
+    //   expiry: getFutureExpiryInSeconds().toString(),
+    //   salt: Date.now().toString(),
+    //   chainId: CHAIN_ID,
+    //   verifyingContract: addresses.exchangeProxy,
+    // }
+    // console.log(signature)
+
+    // const encodedData = ethers.utils.defaultAbiCoder.encode(
+    //   [
+    //     'tuple(address makerToken,address takerToken,uint128 makerAmount ,unit128 takerAmount,address maker,address sender,string expiry ,string salt ,address verifyingContract) d',
+    //     'tuple(string r,string s, uint256 signatureType,uint256 v) d',
+    //   ],
+    //   [
+    //     {
+    //       makerToken: limitOrder.makerToken,
+    //       takerToken: limitOrder.takerToken,
+    //       makerAmount: limitOrder.makerAmount,
+    //       takerAmount: limitOrder.takerAmount,
+    //       maker: limitOrder.maker,
+    //       sender: limitOrder.sender,
+    //       expiry: limitOrder.expiry,
+    //       salt: limitOrder.salt,
+    //       // chainId: limitOrder.chainId,
+    //       verifyingContract: limitOrder.verifyingContract,
+    //     },
+    //     {
+    //       r: signature.r,
+    //       s: signature.s,
+    //       signatureType: signature.signatureType,
+    //       v: signature.v,
+    //     },
+    //   ]
+    // )
+
     let integrationDataencode = ethers.utils.defaultAbiCoder.encode(
       ['string', 'uint256', 'uint256'],
       [encodedData, 0, 1]
     )
     let calldata = ethers.utils.defaultAbiCoder.encode(
-      ['address', 'bytes4', 'bytes'],
+      ['address', 'bytes', 'bytes'],
       [
         '0xae9af6f44848f25ed88facd3de67b647c114af18',
         bytes4Signature,
         integrationDataencode,
       ]
     )
-    console.log(calldata)
 
     try {
       if (signer && daiContract) {
@@ -197,8 +243,6 @@ const SwapPage = () => {
     setSell(value)
   }
   const buyChangeEvt = (value: string) => {
-    console.log(value)
-
     setBuy(value)
   }
   useEffect(() => {

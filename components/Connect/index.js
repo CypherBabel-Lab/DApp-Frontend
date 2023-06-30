@@ -140,6 +140,8 @@ const Connect = () => {
       provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       setSigner(signer)
+      const address = await signer.getAddress()
+      localStorage.setItem('address', address)
       const contract = new ethers.Contract(daiAddress, daiAbi, provider)
       setDaiContract(contract)
     }
@@ -161,7 +163,7 @@ const Connect = () => {
       {/* <div className="Uniswap"> */}
       {/* <SwapWidget provider={provider} /> */}
       {/* </div> */}
-      <Button onClick={() => createNewFund()}>创建基金</Button>
+      {/* <Button onClick={() => createNewFund()}>创建基金</Button> */}
       <WagmiConfig config={wagmiConfig}>
         <Web3Button />
         <Web3NetworkSwitch />

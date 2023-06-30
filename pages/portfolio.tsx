@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Skeleton, Avatar, Button, Tabs } from 'antd'
+import { Card, Skeleton, Avatar, Button, Tabs, Input } from 'antd'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
 import type { TabsProps } from 'antd'
@@ -9,8 +9,20 @@ import StatisticalData from '~/components/protfolioTabs/StatisticalData'
 import DepositsAndWithdrawals from '~/components/protfolioTabs/DepositsAndWithdrawals'
 import GuardianLogic from '../data/GuardianLogic.json'
 import { ethers } from 'ethers'
+import { vault_detailsApi } from '../data/api/AllApi'
+import { useRouter } from 'next/router'
+// import Input from 'antd/es/input/Input'
+interface CarInfo {
+  guardianAddress: string
+  name: string
+  age: number
+  address: string
+  tags: string[]
+  owner: string
+}
 const { Meta } = Card
 let provider
+
 const mtAbi = [
   {
     constant: true,
@@ -167,29 +179,39 @@ const mtAbi = [
 const PortfolioList = () => {
   const [signer, setSigner] = useState(undefined)
   const [daiContract, setDaiContract] = useState(null)
-
+  const [carInfo, setCarInfo] = useState<CarInfo>({})
+  const [userAddress, setUserAddress] = useState('')
+  const [assetsList, setAssetsList] = useState([])
+  const [TradeHistoryList, setTradeHistoryList] = useState([])
+  const [followersList, setFollowersList] = useState([])
+  const router = useRouter()
   const onChange = (key: string) => {
     console.log(key)
   }
-  async function getSigner() {
+  async function getSigner(address: string) {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
-      setSigner(signer)
-      const contract = new ethers.Contract(
-        '0xfdfa52c120095993bce91cac1da2443765c0c239',
-        GuardianLogic.abi,
-        provider
-      )
-      console.log(contract)
+      // console.log(provider._getAddress())
+      // console.log(ethers.utils.getAddress(address))
 
+      setSigner(signer)
+      const contract = new ethers.Contract(address, GuardianLogic.abi, provider)
+      console.log(contract)
       setDaiContract(contract)
     }
   }
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
-    getSigner()
+    vault_detailsApi(router.asPath.split('=')[1]).then((d) => {
+      setAssetsList(d.data.assets)
+      setTradeHistoryList(d.data.activities)
+      setCarInfo(d.data)
+      getSigner(d.data.guardianAddress)
+      setFollowersList(d.data.followers)
+    })
     setTimeout(() => {
       setLoading(false)
     }, 1500)
@@ -198,23 +220,23 @@ const PortfolioList = () => {
     {
       key: '1',
       label: `Current Positions`,
-      children: <CurrentPositions />,
+      children: <CurrentPositions assetsList={assetsList} />,
     },
     {
       key: '2',
       label: `Trade History`,
-      children: <TradeHistory />,
+      children: <TradeHistory TradeHistoryList={TradeHistoryList} />,
     },
     {
       key: '3',
       label: `Statistical Data`,
-      children: <StatisticalData />,
+      children: <StatisticalData followersList={followersList} />,
     },
-    {
-      key: '4',
-      label: `Deposits and Withdrawals`,
-      children: <DepositsAndWithdrawals />,
-    },
+    // {
+    //   key: '4',
+    //   label: `Deposits and Withdrawals`,
+    //   children: <DepositsAndWithdrawals />,
+    // },
   ]
   const DepositEvt = async () => {
     const wmaticContract = new ethers.Contract(
@@ -222,26 +244,52 @@ const PortfolioList = () => {
       mtAbi, //mtABi
       signer
     )
-    const amountToApprove = ethers.constants.MaxUint256
-
-    const investmentAmount = 2
-    const minSharesQuantity = 1
-
+    const allowanceAmount = await wmaticContract.allowance(
+      localStorage.getItem('address'), // 授权者的地址
+      carInfo.guardianAddress // 合约地址或被授权者的地址
+    )
+    // if
+    if (allowanceAmount.toString() === '0') {
+      const amountToApprove = ethers.constants.MaxUint256
+      const approveTx = await wmaticContract.approve(
+        carInfo.guardianAddress, //
+        amountToApprove
+      )
+      await approveTx.wait()
+    }
+    const investmentAmount = 0.001 * 10 ** 18
+    const minSharesQuantity = 0.001 * 10 ** 18
     try {
       if (signer && daiContract) {
         // empower wmt
-        const approveTx = await wmaticContract.approve(
-          '0xfdfa52c120095993bce91cac1da2443765c0c239', //
-          amountToApprove
-        )
-        await approveTx.wait()
+
         const transaction = await daiContract
           .connect(signer)
           .buyShares(investmentAmount, minSharesQuantity, {
-            gasLimit: 21000000,
+            gasLimit: 2100000,
           })
         const receipt = await transaction.wait()
         console.log(receipt)
+      }
+    } catch (error) {
+      console.log('交互错误:', error)
+    }
+  }
+  const followEvt = async (address: string) => {
+    let signer
+    let contract
+    if (window.ethereum) {
+      await window.ethereum.enable()
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      signer = provider.getSigner()
+      contract = new ethers.Contract(address, GuardianLogic.abi, provider)
+    }
+    try {
+      if (signer && contract) {
+        const transaction = await contract.connect(signer).Follow({
+          gasLimit: 21000000,
+        })
+        const receipt = await transaction.wait()
       }
     } catch (error) {
       console.log('交互错误:', error)
@@ -262,12 +310,15 @@ const PortfolioList = () => {
                   alt="touxiang"
                 />
               }
-              title="Audi"
-              description="0x26...AAfA"
+              title={carInfo.name}
+              description={carInfo.owner}
             />
-            <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
-              Deposit
-            </Button>
+            <div className="float-right flex">
+              <Input />
+              <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
+                Deposit
+              </Button>
+            </div>
             <div className="mb-[12px] mt-[12px] grid grid-cols-2 items-end gap-[16px] md:mb-[24px] md:mt-[24px] md:grid-cols-3 lg:grid-cols-4">
               <div>
                 <div className="text-t-sell text-[20px] font-medium">
@@ -300,7 +351,10 @@ const PortfolioList = () => {
                 </div>
               </div>
             </div>
-            <Button className="bn-button bn-button__primary data-size-middle button-primary float-right mb-[10px] h-[40px] w-full rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-white hover:opacity-75 md:mb-0 md:w-[180px] lg:w-[200px]">
+            <Button
+              onClick={() => followEvt(carInfo.guardianAddress)}
+              className="bn-button bn-button__primary data-size-middle button-primary float-right mb-[10px] h-[40px] w-full rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-white hover:opacity-75 md:mb-0 md:w-[180px] lg:w-[200px]"
+            >
               Copy
             </Button>
           </Skeleton>

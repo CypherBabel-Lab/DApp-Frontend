@@ -20,10 +20,11 @@ const ApplyForLeaderPage = () => {
   const [previewTitle, setPreviewTitle] = useState('')
   const [describeValue, setDescribeValue] = useState('')
   const [fileList, setFileList] = useState<UploadFile[]>([])
+  const [selectAsset, setSelectAsset] = useState('')
   const [name, setName] = useState('')
   const [symbol, setSymbol] = useState('')
   const handleChange = (value: any) => {
-    console.log(`selected ${value}`)
+    setSelectAsset(value)
   }
   async function getSigner() {
     if (window.ethereum) {
@@ -32,8 +33,7 @@ const ApplyForLeaderPage = () => {
       const signer = provider.getSigner()
       setSigner(signer)
       const contract = new ethers.Contract(
-        '0x773f0ffB26185b3478857cE9732B8D480f0c37A7',
-         
+        '0xD3F1d851Df6974b3683a84947C3D55bCb375cc19',
         VaultFactory.abi,
         provider
       )
@@ -44,9 +44,10 @@ const ApplyForLeaderPage = () => {
     getSigner()
   }, [])
   async function createValut() {
+    console.log(selectAsset)
     const vaultName = name
     const vaultSymbol = symbol
-    const denominationAsset = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889'
+    const denominationAsset = selectAsset
     const sharesActionTimelock = new Date().getTime()
 
     try {
@@ -66,7 +67,7 @@ const ApplyForLeaderPage = () => {
     } catch (error) {
       console.log('交互错误:', error)
     }
-  }0x0261bf3a2ba3539cb8dd455957c00248e19fe3e2
+  }
   return (
     <Sidbar>
       <div
@@ -80,10 +81,20 @@ const ApplyForLeaderPage = () => {
         className="rounded-2xl bg-zinc-800"
       >
         <div>
-          Name: <Input />
+          Name:{' '}
+          <Input
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
         </div>
         <div>
-          Symbol: <Input />
+          Symbol:{' '}
+          <Input
+            onChange={(e) => {
+              setSymbol(e.target.value)
+            }}
+          />
         </div>
         <div>
           底层资产
@@ -92,9 +103,22 @@ const ApplyForLeaderPage = () => {
             style={{ width: 120 }}
             onChange={handleChange}
             options={[
-              { value: 'USDT', label: 'USDT' },
-              { value: 'BTC', label: 'BTC' },
-              { value: 'ETH', label: 'ETH' },
+              {
+                value: '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747',
+                label: 'USDC',
+              },
+              {
+                value: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
+                label: 'Link',
+              },
+              {
+                value: '0xd393b1E02dA9831Ff419e22eA105aAe4c47E1253',
+                label: 'Dai',
+              },
+              {
+                value: '0xE03489D4E90b22c59c5e23d45DFd59Fc0dB8a025',
+                label: 'Sand',
+              },
             ]}
           />
         </div>

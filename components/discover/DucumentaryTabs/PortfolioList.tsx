@@ -4,373 +4,65 @@ import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
 import InitMoney from '~/components/Label/IintMoney'
 import { useRouter } from 'next/router'
-const carInfo = [
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-  {
-    headsculpture: (
-      <Image
-        src="/images/123.jpg"
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-        alt="touxiang"
-      />
-    ),
-    name: 'Audi',
-    address: '0x26...AAfA',
-    peopleNum: '10',
-    roi: 10,
-    pnl: 10,
-    nav: '10',
-    runtime: '10day',
-  },
-]
+import { vault_listApi } from '../../../data/api/AllApi'
+import { ethers } from 'ethers'
+import GuardianLogic from '../../../data/GuardianLogic.json'
 const { Meta } = Card
+function splitString(inputString: string): string {
+  if (inputString.length <= 8) {
+    return inputString
+  }
+
+  const firstFourChars: string = inputString.substring(0, 4)
+  const lastFourChars: string = inputString.substring(inputString.length - 4)
+
+  return `${firstFourChars}...${lastFourChars}`
+}
+let provider
 const PortfolioList = (props: any) => {
+  // const [signer, setSigner] = useState(undefined)
+  // const [daiContract, setDaiContract] = useState(null)
+  async function getSigner() {
+    if (window.ethereum) {
+      await window.ethereum.enable()
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      setSigner(signer)
+      const contract = new ethers.Contract(
+        '0xCf3C934AC369f72ac5F5e17E8da7206ad4705996',
+        GuardianLogic.abi,
+        provider
+      )
+      setDaiContract(contract)
+    }
+  }
   const router = useRouter()
   const { selectTabsKey } = props
   const [carLoading, setCarLoading] = useState<boolean>(true)
+  const [carInfo, setCarInfo] = useState<any[]>([])
+  function getTimeDifference(targetTime: any) {
+    // 获取当前时间
+    const currentTime = new Date()
+
+    // 获取给定时间
+    const givenTime = new Date(targetTime)
+
+    // 计算时间差（以毫秒为单位）
+    const timeDifference = currentTime - givenTime
+
+    // 将时间差转换为秒、分钟、小时、天等单位
+    const seconds = Math.floor(timeDifference / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+
+    // 构建时间差字符串
+    const timeDiffString = `${days}天 ${hours % 24}小时 ${minutes % 60}分钟 ${
+      seconds % 60
+    }秒`
+
+    return timeDiffString
+  }
   useEffect(() => {
     if (selectTabsKey === '2') {
       setTimeout(() => {
@@ -380,6 +72,48 @@ const PortfolioList = (props: any) => {
       setCarLoading(true)
     }
   }, [selectTabsKey])
+  useEffect(() => {
+    // getSigner()
+    vault_listApi().then((d) => {
+      console.log(d)
+      let temp = []
+      for (let i = 0; i < d.data.list.length; i++) {
+        console.log(d.data.list[i].followers.length)
+        let tempt = {}
+        tempt.name = d.data.list[i].name
+        tempt.address = d.data.list[i].owner
+        tempt.detaiAddress = d.data.list[i].address
+        tempt.runtime = getTimeDifference(d.data.list[i].CreatedAt)
+        tempt.roi = 10
+        tempt.pnl = 10
+        tempt.nav = '10'
+        tempt.peopleNum = d.data.list[i].followers.length
+        tempt.copyAddress = d.data.list[i].guardianAddress
+        temp.push(tempt)
+      }
+      setCarInfo(temp)
+    })
+  }, [])
+  const follow = async (address: string) => {
+    let signer
+    let contract
+    if (window.ethereum) {
+      await window.ethereum.enable()
+      provider = new ethers.providers.Web3Provider(window.ethereum)
+      signer = provider.getSigner()
+      contract = new ethers.Contract(address, GuardianLogic.abi, provider)
+    }
+    try {
+      if (signer && contract) {
+        const transaction = await contract.connect(signer).Follow({
+          gasLimit: 21000000,
+        })
+        const receipt = await transaction.wait()
+      }
+    } catch (error) {
+      console.log('交互错误:', error)
+    }
+  }
   return (
     <>
       <div className="flex flex-wrap">
@@ -398,18 +132,16 @@ const PortfolioList = (props: any) => {
               className="border bg-zinc-800 hover:border-emerald-400"
               loading={carLoading}
               key={it.name}
-              // actions={[
-              //   <Button
-              //     style={{ lineHeight: '16px' }}
-              //     className="rounded-md bg-gradient-to-r from-gray-800 to-black px-4 py-2 text-white hover:opacity-90"
-              //   >
-              //     <span className="font-bold">Copy</span>
-              //   </Button>,
-              // ]}
             >
               <div
                 onClick={() => {
-                  router.push('/portfolio')
+                  router.push({
+                    pathname: '/portfolio',
+                    query: {
+                      address: it.detaiAddress,
+                    },
+                  })
+                  // router.push(')
                 }}
               >
                 <div className="flex">
@@ -419,7 +151,7 @@ const PortfolioList = (props: any) => {
                       {it.name}
                     </span>
                     <span className="font-semibold text-zinc-400">
-                      {it.address}
+                      {splitString(it.address)}
                     </span>
                     <div className="flex">
                       <Image
@@ -461,7 +193,7 @@ const PortfolioList = (props: any) => {
                       </div>
                     </div>
                     <div>
-                      <div className="text-2xl font-semibold">{it.runtime}</div>
+                      <div className="font-semibold">{it.runtime}</div>
                       <div className="text-xs font-semibold text-neutral-400">
                         Runtime
                       </div>
@@ -469,16 +201,17 @@ const PortfolioList = (props: any) => {
                   </div>
                 </div>
               </div>
-              {/* <Meta
+              <Meta
                 description={
                   <Button
-                    style={{ lineHeight: '16px' }}
+                    style={{ lineHeight: '16px', float: 'right' }}
                     className="rounded-md bg-gradient-to-r from-gray-800 to-black px-4 py-2 text-white hover:opacity-90"
+                    onClick={() => follow(it.copyAddress)}
                   >
                     <span className="font-bold">Copy</span>
                   </Button>
                 }
-              /> */}
+              />
             </Card>
           )
         })}
