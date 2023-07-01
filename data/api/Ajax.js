@@ -3,7 +3,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Modal, Button } from 'antd'
 import { FormattedMessage } from 'react-intl'
 const Axios = axios.create({
-  baseURL: 'http://192.168.0.47:8001',
+  baseURL: 'https://dapp.cbindex.finance/api',
   timeout: 36000,
 })
 

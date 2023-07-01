@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Skeleton, Avatar, Button, Tabs, Input } from 'antd'
+import { Card, Skeleton, Avatar, Button, Tabs, InputNumber } from 'antd'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
 import type { TabsProps } from 'antd'
@@ -11,7 +11,10 @@ import GuardianLogic from '../data/GuardianLogic.json'
 import { ethers } from 'ethers'
 import { vault_detailsApi } from '../data/api/AllApi'
 import { useRouter } from 'next/router'
-// import Input from 'antd/es/input/Input'
+import erc20 from '../data/erc20.json'
+// import { BigNumber } from 'ethers'
+// import BigNumber from 'bignumber.js'
+// import InputNumber from 'antd/es/input/InputNumber'
 interface CarInfo {
   guardianAddress: string
   name: string
@@ -184,22 +187,37 @@ const PortfolioList = () => {
   const [assetsList, setAssetsList] = useState([])
   const [TradeHistoryList, setTradeHistoryList] = useState([])
   const [followersList, setFollowersList] = useState([])
+  const [erc20Contract, setErc20Contract] = useState(null)
+  const [userBalance, seUserBalance] = useState(0)
+  const [vaultBaseAssetAddress, setVaultBaseAssetAddress] = useState('')
+  const [depositAmount, setDepositAmount] = useState(0)
   const router = useRouter()
   const onChange = (key: string) => {
     console.log(key)
   }
-  async function getSigner(address: string) {
+  async function getSigner(address: string, denominationAsset: string) {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })
       // console.log(provider._getAddress())
       // console.log(ethers.utils.getAddress(address))
-
       setSigner(signer)
       const contract = new ethers.Contract(address, GuardianLogic.abi, provider)
-      console.log(contract)
       setDaiContract(contract)
+      const erc20Contract = new ethers.Contract(
+        denominationAsset,
+        erc20,
+        provider
+      )
+      console.log(erc20Contract)
+      erc20Contract.balanceOf(accounts[0]).then((d) => {
+        seUserBalance(d.toString() / 10 ** 18)
+      })
+      setErc20Contract(erc20Contract)
     }
   }
   const [loading, setLoading] = useState(true)
@@ -209,7 +227,8 @@ const PortfolioList = () => {
       setAssetsList(d.data.assets)
       setTradeHistoryList(d.data.activities)
       setCarInfo(d.data)
-      getSigner(d.data.guardianAddress)
+      getSigner(d.data.guardianAddress, d.data.denominationAsset)
+      setVaultBaseAssetAddress(d.data.denominationAsset)
       setFollowersList(d.data.followers)
     })
     setTimeout(() => {
@@ -240,7 +259,7 @@ const PortfolioList = () => {
   ]
   const DepositEvt = async () => {
     const wmaticContract = new ethers.Contract(
-      '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889', //mtAddress
+      vaultBaseAssetAddress, //mtAddress
       mtAbi, //mtABi
       signer
     )
@@ -250,16 +269,17 @@ const PortfolioList = () => {
     )
     // if
     console.log(allowanceAmount.toString())
+    if (allowanceAmount.toString() === '0') {
+      const amountToApprove = ethers.constants.MaxUint256
+      const approveTx = await wmaticContract.approve(
+        carInfo.guardianAddress, //
+        amountToApprove
+      )
+      await approveTx.wait()
+    }
+    console.log(depositAmount)
 
-    // if (allowanceAmount.toString() === '0') {
-    const amountToApprove = ethers.constants.MaxUint256
-    const approveTx = await wmaticContract.approve(
-      carInfo.guardianAddress, //
-      amountToApprove
-    )
-    await approveTx.wait()
-    // }
-    const investmentAmount = 0.00000001 * 10 ** 18
+    const investmentAmount = ethers.utils.formatUnits(depositAmount, 18)
     const minSharesQuantity = 1
     try {
       if (signer && daiContract) {
@@ -314,8 +334,15 @@ const PortfolioList = () => {
               title={carInfo.name}
               description={carInfo.owner}
             />
-            <div className="float-right flex">
-              <Input />
+            <div className="float-right flex  flex-col">
+              <div>{vaultBaseAssetAddress}</div>
+              <div>Max:{Math.floor(userBalance * 10000) / 10000}</div>
+              <InputNumber
+                max={Math.floor(userBalance * 10000) / 10000}
+                min={0}
+                step={0.01}
+                onChange={setDepositAmount}
+              />
               <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
                 Deposit
               </Button>

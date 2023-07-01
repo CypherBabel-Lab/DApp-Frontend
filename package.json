@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 3003"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "@nextui-org/react": "^1.0.0-beta.13",
     "@radix-ui/colors": "^0.1.8",
     "@supabase/supabase-js": "^1.33.3",
+    "@tanstack/react-query": "^4.29.19",
     "@uniswap/default-token-list": "^3.0.0",
     "@uniswap/widgets": "^1.0.0",
     "@web3modal/ethereum": "^2.4.7",
@@ -49,11 +50,12 @@
     "react-three-fiber": "^6.0.13",
     "react-transition-group": "^4.4.5",
     "swiper": "^8.0.7",
+    "swr": "2.1.5",
     "three": "^0.153.0",
     "use-debounce": "^7.0.1",
     "uws": "^200.0.0",
-    "viem": "^1.0.7",
-    "wagmi": "^1.2.0",
+    "viem": "^0.3.50",
+    "wagmi": "^1.1.0",
     "web3": "^4.0.2"
   },
   "devDependencies": {

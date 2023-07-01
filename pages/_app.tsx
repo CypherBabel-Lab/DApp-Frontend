@@ -5,53 +5,86 @@ import '../styles/swiper.css'
 import Layout from '~/components/Layout'
 import Head from 'next/head'
 import { ConfigProvider, theme } from 'antd'
+import {
+  arbitrum,
+  mainnet,
+  polygon,
+  arbitrumGoerli,
+  polygonMumbai,
+} from 'wagmi/chains'
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from 'connectkit'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+const projectId = 'bce62feae59107ac8ebbdc9aa8810513'
+const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
 function MyApp({ Component, pageProps }: AppProps) {
+  const config = createConfig(
+    getDefaultConfig({
+      // Required API Keys
+      alchemyId: 'Ah1uBeiN9iaNdSMTMRPHMT2vp2-nkVel', // or infuraId
+      walletConnectProjectId: projectId,
+      // Required
+      appName: 'QWE',
+      // Optional
+      chains,
+      appDescription: 'Your App Description',
+      appUrl: 'https://app.cbindex.finance', // your app's url
+      // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    })
+  )
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: theme.darkAlgorithm,
-        token: {
-          colorPrimary: '#5bfb91',
-        },
-        components: {
-          Table: {
-            // colorBg: "transpanrent",
-            borderRadius: 4,
-            borderRadiusLG: 6,
-            colorFillAlter: 'rgba(255, 255, 255, 0.02)',
-            fontSize: 14,
-          },
-          Button: {
-            fontSize: 14,
-            colorLink: '#42aa65',
-            colorLinkHover: '#5bfb91',
-            colorLinkActive: '#5bfb91',
-          },
-          Popover: {
-            colorBgElevated: 'rgba(48,48,48, 0.9)',
-            padding: 8,
-          },
-          // Modal: {
-          //   color: 'red',
-          // },
-          Segmented: {
-            colorText: 'white',
-            colorBorder: 'white',
-          },
-        },
-      }}
-    >
-      <ThemeProvider>
-        <Head>
-          <title>{123} | Supabase Partner Gallery Example</title>
-          <meta name="description"></meta>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </ConfigProvider>
+    <WagmiConfig config={config}>
+      <ConnectKitProvider>
+        <ConfigProvider
+          theme={{
+            algorithm: theme.darkAlgorithm,
+            token: {
+              colorPrimary: '#5bfb91',
+            },
+            components: {
+              Table: {
+                // colorBg: "transpanrent",
+                borderRadius: 4,
+                borderRadiusLG: 6,
+                colorFillAlter: 'rgba(255, 255, 255, 0.02)',
+                fontSize: 14,
+              },
+              Button: {
+                fontSize: 14,
+                colorLink: '#42aa65',
+                colorLinkHover: '#5bfb91',
+                colorLinkActive: '#5bfb91',
+              },
+              Popover: {
+                colorBgElevated: 'rgba(48,48,48, 0.9)',
+                padding: 8,
+              },
+              // Modal: {
+              //   color: 'red',
+              // },
+              Segmented: {
+                colorText: 'white',
+                colorBorder: 'white',
+              },
+            },
+          }}
+        >
+          <ThemeProvider>
+            <Head>
+              <title>{123} | Supabase Partner Gallery Example</title>
+              <meta name="description"></meta>
+              <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ThemeProvider>
+        </ConfigProvider>
+      </ConnectKitProvider>
+    </WagmiConfig>
   )
 }
 

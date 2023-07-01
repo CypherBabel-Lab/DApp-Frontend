@@ -126,8 +126,8 @@ const Connect = () => {
       // Optional
       chains,
       appDescription: 'Your App Description',
-      appUrl: 'https://family.co', // your app's url
-      appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+      // appUrl: 'https://app.cbindex.finance', // your app's url
+      // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
     })
   )
 
@@ -153,11 +153,11 @@ const Connect = () => {
       {/* <SwapWidget provider={provider} /> */}
       {/* </div> */}
       {/* <Button onClick={() => createNewFund()}>创建基金</Button> */}
-      <WagmiConfig config={config}>
-        <ConnectKitProvider>
-          <ConnectKitButton />
-        </ConnectKitProvider>
-      </WagmiConfig>
+      {/* <WagmiConfig config={config}> */}
+      {/* <ConnectKitProvider> */}
+      {/* <ConnectKitButton /> */}
+      {/* </ConnectKitProvider>
+      </WagmiConfig> */}
     </>
   )
 }
