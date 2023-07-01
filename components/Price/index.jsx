@@ -27,11 +27,16 @@ import {
 // }
 
 export const fetcher = ([endpoint, params]) => {
+  console.log(endpoint)
   const { sellAmount, buyAmount } = params
   if (!sellAmount && !buyAmount) return
   const query = qs.stringify(params)
 
-  return fetch(`${endpoint}?${query}`).then((res) => res.json())
+  return fetch(`${endpoint}?${query}`, {
+    headers: {
+      '0x-api-key': 'c9f13c84-9fcb-4f42-aa30-a11b0d016aa5', // process.env.NEXT_PUBLIC_0X_API_KEY,
+    },
+  }).then((res) => res.json())
 }
 
 export default function PriceView({ setPrice, setFinalize, takerAddress }) {
@@ -66,7 +71,7 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
 
   const { isLoading: isLoadingPrice } = useSWR(
     [
-      '/api/price',
+      'https://polygon.api.0x.org/swap/v1/price',
       {
         sellToken: POLYGON_TOKENS_BY_SYMBOL[sellToken].address,
         buyToken: POLYGON_TOKENS_BY_SYMBOL[buyToken].address,

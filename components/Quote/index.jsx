@@ -20,7 +20,7 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
 
   const { isLoading: isLoadingPrice } = useSWR(
     [
-      '/api/quote',
+      'https://polygon.api.0x.org/swap/v1/quote',
       {
         sellToken: price.sellTokenAddress,
         buyToken: price.buyTokenAddress,
