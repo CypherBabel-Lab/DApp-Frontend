@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react'
 import qs from 'qs'
 import { LimitOrder, SignatureType, RfqOrder } from '@0x/protocol-utils'
 import { ethers } from 'ethers'
-import { BigNumber } from '@0x/utils'
-import { getContractAddressesForChainOrThrow } from '@0x/contract-addresses'
 import { Web3Wrapper } from '@0x/web3-wrapper'
 import { providerEngine } from '../components/LimitOrder/provider_engine'
 import GuardianLogic from '../data/GuardianLogic.json'
 import CallOn from '../data/CallOn.json'
 import erc20 from '../data/erc20.json'
 import { Web3ProviderEngine } from '@0x/subproviders'
+import detectEthereumProvider from '@metamask/detect-provider'
+import Web3 from 'web3'
 function formatSelector(str: string) {
   const bytes4 = ethers.utils.id(str).substring(0, 10)
   return bytes4
@@ -68,6 +68,9 @@ const SwapPage = () => {
   const [contractAddress, setContractAddress] = useState(
     '0x26AB767c39Ba52fCA0b77790D217Ba139aa7fF2A'
   )
+
+  // console.log()
+
   async function getSigner() {
     if (window.ethereum) {
       await window.ethereum.enable()
@@ -92,53 +95,40 @@ const SwapPage = () => {
   async function sign() {
     console.log(returnOrderObj)
     const bytes4Signature = formatSelector('takeOrder(address,bytes,bytes)')
-    const CHAIN_ID = 80001
     const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
-    const addresses = getContractAddressesForChainOrThrow(CHAIN_ID)
-    console.log(addresses)
     const getFutureExpiryInSeconds = () => Math.floor(Date.now() / 1000 + 300) // 5 min expiry
-    const web3Wrapper = new Web3Wrapper(window.ethereum)
+    console.log(getFutureExpiryInSeconds())
+    // const web3Wrapper = new Web3Wrapper(provider)
     const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts',
     })
-    const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync()
+    // const [maker, taker] = await web3Wrapper.getAvailableAddressesAsync()
     // maker = accounts[0]
-    console.log(maker)
+    // console.log(maker)
 
-    console.log(accounts[0])
+    // console.log(accounts[0])
+    // console.log(provider)
+    const web3 = new Web3(window.ethereum)
     const rfqOrder: RfqOrder = new RfqOrder({
       chainId: 80001,
       makerToken: buyTokenAddress,
       takerToken: sellTokenAddress,
       makerAmount: returnOrderObj.orders[0].makerAmount,
       takerAmount: returnOrderObj.orders[0].takerAmount,
-      maker: '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2',
+      maker: '0x92bfe961dce0e686809f185236fd66ed9fd792bb',
       taker: NULL_ADDRESS,
       txOrigin: '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2',
       pool: ethers.utils.formatBytes32String(''),
-      expiry: 1688196902,
-      salt: 1992931,
+      expiry: getFutureExpiryInSeconds(),
+      salt: getFutureExpiryInSeconds(),
     })
-    console.log(web3Wrapper.getProvider())
-
-    const signature = await rfqOrder.getSignatureWithProviderAsync(
-      new Web3ProviderEngine(window.ethereum),
-      SignatureType.EIP712
+    // console.log(rfqOrder.getHash())
+    const signture = await rfqOrder.getSignatureWithProviderAsync(
+      web3.currentProvider,
+      SignatureType.EIP712,
+      accounts[0]
     )
-    console.log(signature)
-
-    const limitOrder = {
-      makerToken: buyTokenAddress,
-      takerToken: sellTokenAddress,
-      makerAmount: returnOrderObj.orders[0].makerAmount,
-      takerAmount: returnOrderObj.orders[0].takerAmount,
-      maker: '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2',
-      taker: NULL_ADDRESS,
-      txOrigin: '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2',
-      pool: ethers.utils.formatBytes32String(''),
-      expiry: 1688196902,
-      salt: 1992931,
-    }
+    console.log(signture)
     const encodedData = ethers.utils.defaultAbiCoder.encode(
       [
         'tuple(address makerToken,address takerToken,uint128 makerAmount ,uint128 takerAmount,address maker,address taker, address txOrigin,bytes32 pool, uint64 expiry ,uint256 salt) d',
@@ -146,22 +136,22 @@ const SwapPage = () => {
       ],
       [
         {
-          makerToken: limitOrder.makerToken,
-          takerToken: limitOrder.takerToken,
-          makerAmount: limitOrder.makerAmount,
-          takerAmount: limitOrder.takerAmount,
-          maker: limitOrder.maker,
-          taker: limitOrder.taker,
-          txOrigin: limitOrder.txOrigin,
-          pool: limitOrder.pool,
-          expiry: limitOrder.expiry,
-          salt: limitOrder.salt,
+          makerToken: rfqOrder.makerToken,
+          takerToken: rfqOrder.takerToken,
+          makerAmount: rfqOrder.makerAmount,
+          takerAmount: rfqOrder.takerAmount,
+          maker: rfqOrder.maker,
+          taker: rfqOrder.taker,
+          txOrigin: rfqOrder.txOrigin,
+          pool: rfqOrder.pool,
+          expiry: rfqOrder.expiry,
+          salt: rfqOrder.salt,
         },
         {
-          signatureType: signature.signatureType,
-          v: signature.v,
-          r: signature.r,
-          s: signature.s,
+          signatureType: signture.signatureType,
+          v: signture.v,
+          r: signture.r,
+          s: signture.s,
         },
       ]
     )
@@ -177,6 +167,7 @@ const SwapPage = () => {
         integrationDataencode,
       ]
     )
+    console.log(calldata);
     try {
       if (signer && daiContract) {
         const transaction = daiContract

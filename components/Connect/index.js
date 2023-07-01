@@ -6,23 +6,14 @@ import {
   arbitrumGoerli,
   polygonMumbai,
 } from 'wagmi/chains'
-import {
-  Web3Button,
-  Web3Modal,
-  useWeb3ModalTheme,
-  Web3NetworkSwitch,
-} from '@web3modal/react'
-import { Button } from 'antd'
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import {
-  SupportedLocale,
-  SUPPORTED_LOCALES,
-  SwapWidget,
-} from '@uniswap/widgets'
 // import '@uniswap/widgets/dist/fonts.css'
-
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from 'connectkit'
 const daiAddress = '0x2662fA996a31A09A7987bf1fe218271B91cBAAfA'
 const daiAbi = [
   {
@@ -82,19 +73,10 @@ const daiAbi = [
 ]
 const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
 const projectId = 'bce62feae59107ac8ebbdc9aa8810513'
-
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors: w3mConnectors({ projectId, version: 1, chains }),
-  publicClient,
-})
-const ethereumClient = new EthereumClient(wagmiConfig, chains)
 let provider = ''
 const Connect = () => {
   const [signer, setSigner] = useState(null)
   const [daiContract, setDaiContract] = useState(null)
-  const { setTheme } = useWeb3ModalTheme()
   async function createNewFund() {
     const fee = ethers.utils.defaultAbiCoder.encode(
       ['uint256', 'address'],
@@ -134,6 +116,21 @@ const Connect = () => {
       console.log('交互错误:', error)
     }
   }
+  const config = createConfig(
+    getDefaultConfig({
+      // Required API Keys
+      alchemyId: 'Ah1uBeiN9iaNdSMTMRPHMT2vp2-nkVel', // or infuraId
+      walletConnectProjectId: projectId,
+      // Required
+      appName: 'QWE',
+      // Optional
+      chains,
+      appDescription: 'Your App Description',
+      appUrl: 'https://family.co', // your app's url
+      appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    })
+  )
+
   async function getSigner() {
     if (window.ethereum) {
       await window.ethereum.enable()
@@ -147,14 +144,6 @@ const Connect = () => {
     }
   }
   useEffect(() => {
-    setTheme({
-      themeMode: 'dark',
-      themeVariables: {
-        '--w3m-font-family': 'Roboto, sans-serif',
-        '--w3m-accent-color': '#F5841F',
-        '--w3m-background-color': 'rgb(20,20,20)',
-      },
-    })
     getSigner()
   }, [])
 
@@ -164,15 +153,11 @@ const Connect = () => {
       {/* <SwapWidget provider={provider} /> */}
       {/* </div> */}
       {/* <Button onClick={() => createNewFund()}>创建基金</Button> */}
-      <WagmiConfig config={wagmiConfig}>
-        <Web3Button />
-        <Web3NetworkSwitch />
+      <WagmiConfig config={config}>
+        <ConnectKitProvider>
+          <ConnectKitButton />
+        </ConnectKitProvider>
       </WagmiConfig>
-      <Web3Modal
-        projectId={projectId}
-        themeMode="dark"
-        ethereumClient={ethereumClient}
-      />
     </>
   )
 }
