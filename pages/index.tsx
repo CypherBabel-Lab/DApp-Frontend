@@ -3,9 +3,9 @@ import Head from 'next/head'
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
-        <title>Supabase Partner Gallery Example</title>
+        <title>CBIndex | One-stop Toolkit for Decentralized Investment</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     </div>

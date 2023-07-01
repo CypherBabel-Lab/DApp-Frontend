@@ -66,18 +66,19 @@ const Nav = () => {
     </>
   )
   return (
-    <nav className="w-full border-b bg-scale-300 p-4">
-      <div className="flex flex-row-reverse">
-        <Connect />
+    <nav className="w-full p-4 border-b bg-scale-300">
+      <div className="flex justify-end">
         <Popover
           placement="bottom"
-          // title={'123'}
           onMouseEnter={handleMouseEnter}
           content={content}
           // arrow={mergedArrow}
         >
-          <BellFilled style={{ color: 'white', cursor: 'pointer' }} />
+          <BellFilled
+            style={{ color: '#999', cursor: 'pointer', padding: '0 10px' }}
+          />
         </Popover>
+        <Connect />
       </div>
     </nav>
   )

@@ -4,6 +4,7 @@ import Sidbar from './Sidbar'
 import { Button, Modal, Upload, Input, Select } from 'antd'
 import type { UploadFile } from 'antd/es/upload/interface'
 import 'react-quill/dist/quill.snow.css'
+// import 'react-quill/dist/quill.snow.css'
 import VaultFactory from '../data/VaultFactory.json'
 import { ethers } from 'ethers'
 let provider
