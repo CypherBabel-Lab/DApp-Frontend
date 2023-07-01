@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <ThemeProvider>
         <Head>
-          <title>{123} | Supabase Partner Gallery Example</title>
+          <title>CBIndex | One-stop Toolkit for Decentralized Investment</title>
           <meta name="description"></meta>
           <link rel="icon" href="/favicon.ico" />
         </Head>

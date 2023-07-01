@@ -9,7 +9,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   useEffect(() => {
-    const key = localStorage.getItem('supabaseDarkMode')
+    const key = localStorage.getItem('cbindexDarkMode')
     if (!key) {
       document.documentElement.className = 'dark'
     } else {

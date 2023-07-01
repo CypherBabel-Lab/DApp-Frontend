@@ -20,7 +20,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
-    const key = localStorage.getItem('supabaseDarkMode')
+    const key = localStorage.getItem('cbindexDarkMode')
     // Default to dark mode if no preference config
     setIsDarkMode(!key || key === 'true')
   }, [])
