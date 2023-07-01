@@ -125,6 +125,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <meta name="description"></meta>
               <link rel="icon" href="/favicon.ico" />
             </Head>
+            <ConnectKitButton />
             <Layout>
               <Component {...pageProps} />
             </Layout>
