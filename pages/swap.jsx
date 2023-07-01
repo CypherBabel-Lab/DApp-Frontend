@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import SwapPage from '~/components/SwapPage'
-import PriceView from './Price'
-import QuoteView from './Quote'
-import type { PriceResponse } from './api/types'
+import PriceView from '../components/Price'
+import QuoteView from '../components/Quote'
+// import type { PriceResponse } from './api/types'
 import { useAccount } from 'wagmi'
 const Swap = () => {
   const [tradeDirection, setTradeDirection] = useState('sell')
   const [finalize, setFinalize] = useState(false)
-  const [price, setPrice] = useState<PriceResponse | undefined>()
+  const [price, setPrice] = useState()
   const [quote, setQuote] = useState()
   const { address } = useAccount()
   console.log(address)

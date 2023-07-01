@@ -19,6 +19,8 @@ function splitString(inputString: string): string {
   return `${firstFourChars}...${lastFourChars}`
 }
 let provider
+let signer: any
+let daiContract: any
 const PortfolioList = (props: any) => {
   // const [signer, setSigner] = useState(undefined)
   // const [daiContract, setDaiContract] = useState(null)
@@ -26,14 +28,16 @@ const PortfolioList = (props: any) => {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      setSigner(signer)
+      signer = provider.getSigner()
+      // setSigner(signer)
+
       const contract = new ethers.Contract(
         '0xCf3C934AC369f72ac5F5e17E8da7206ad4705996',
         GuardianLogic.abi,
         provider
       )
-      setDaiContract(contract)
+      daiContract = contract
+      // setDaiContract(contract)
     }
   }
   const router = useRouter()
@@ -48,7 +52,7 @@ const PortfolioList = (props: any) => {
     const givenTime = new Date(targetTime)
 
     // 计算时间差（以毫秒为单位）
-    const timeDifference = currentTime - givenTime
+    const timeDifference = Number(currentTime) - Number(givenTime)
 
     // 将时间差转换为秒、分钟、小时、天等单位
     const seconds = Math.floor(timeDifference / 1000)
@@ -78,8 +82,29 @@ const PortfolioList = (props: any) => {
       console.log(d)
       let temp = []
       for (let i = 0; i < d.data.list.length; i++) {
-        console.log(d.data.list[i].followers.length)
-        let tempt = {}
+        let tempt: {
+          name: string
+          address: string
+          detailAddress: string
+          runtime: string // 或者使用适当的日期/时间类型
+          roi: number
+          pnl: number
+          nav: string // 或者使用适当的数字类型
+          peopleNum: number
+          copyAddress: string
+          detaiAddress: string
+        } = {
+          name: '',
+          address: '',
+          detailAddress: '',
+          runtime: '',
+          roi: 0,
+          pnl: 0,
+          nav: '',
+          peopleNum: 0,
+          copyAddress: '',
+          detaiAddress: ''
+        }
         tempt.name = d.data.list[i].name
         tempt.address = d.data.list[i].owner
         tempt.detaiAddress = d.data.list[i].address

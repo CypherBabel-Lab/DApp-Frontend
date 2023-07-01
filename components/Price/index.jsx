@@ -9,7 +9,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-  type Address,
+  // type Address,
 } from 'wagmi'
 import {
   POLYGON_TOKENS,
@@ -18,15 +18,15 @@ import {
   exchangeProxy,
 } from '../../lib/constants'
 
-interface PriceRequestParams {
-  sellToken: string
-  buyToken: string
-  buyAmount?: string
-  sellAmount?: string
-  takerAddress?: string
-}
+// interface PriceRequestParams {
+//   sellToken: string
+//   buyToken: string
+//   buyAmount?: string
+//   sellAmount?: string
+//   takerAddress?: string
+// }
 
-export const fetcher = ([endpoint, params]: [string, PriceRequestParams]) => {
+export const fetcher = ([endpoint, params]) => {
   const { sellAmount, buyAmount } = params
   if (!sellAmount && !buyAmount) return
   const query = qs.stringify(params)
@@ -34,16 +34,7 @@ export const fetcher = ([endpoint, params]: [string, PriceRequestParams]) => {
   return fetch(`${endpoint}?${query}`).then((res) => res.json())
 }
 
-export default function PriceView({
-  setPrice,
-  setFinalize,
-  takerAddress,
-}: {
-  price: any
-  setPrice: (price: any) => void
-  setFinalize: (finalize: boolean) => void
-  takerAddress: Address | undefined
-}) {
+export default function PriceView({ setPrice, setFinalize, takerAddress }) {
   // fetch price here
   const [sellAmount, setSellAmount] = useState('')
   const [buyAmount, setBuyAmount] = useState('')
@@ -51,11 +42,11 @@ export default function PriceView({
   const [sellToken, setSellToken] = useState('wmatic')
   const [buyToken, setBuyToken] = useState('dai')
 
-  const handleSellTokenChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSellTokenChange = (e) => {
     setSellToken(e.target.value)
   }
 
-  function handleBuyTokenChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleBuyTokenChange(e) {
     setBuyToken(e.target.value)
   }
 
@@ -229,15 +220,7 @@ export default function PriceView({
   )
 }
 
-function ApproveOrReviewButton({
-  takerAddress,
-  onClick,
-  sellTokenAddress,
-}: {
-  takerAddress: Address
-  onClick: () => void
-  sellTokenAddress: Address
-}) {
+function ApproveOrReviewButton({ takerAddress, onClick, sellTokenAddress }) {
   // 1. Read from erc20, does spender (0x Exchange Proxy) have allowance?
   const { data: allowance, refetch } = useContractRead({
     address: sellTokenAddress,
@@ -271,7 +254,7 @@ function ApproveOrReviewButton({
     return <div>Something went wrong: {error.message}</div>
   }
 
-  if (allowance === 0n && approveAsync) {
+  if (allowance === BigInt(0) && approveAsync) {
     return (
       <>
         <button

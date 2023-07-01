@@ -3,7 +3,6 @@ import Sidbar from './Sidbar'
 
 import { Button, Modal, Upload, Input, Select } from 'antd'
 import type { UploadFile } from 'antd/es/upload/interface'
-import 'react-quill/dist/quill.snow.css'
 // import 'react-quill/dist/quill.snow.css'
 import VaultFactory from '../data/VaultFactory.json'
 import { ethers } from 'ethers'
@@ -13,9 +12,11 @@ declare global {
     ethereum?: any
   }
 }
+let signer: any
+let daiContract: any
 const ApplyForLeaderPage = () => {
-  const [signer, setSigner] = useState(undefined)
-  const [daiContract, setDaiContract] = useState(null)
+  // const [signer, setSigner] = useState(undefined)
+  // const [daiContract, setDaiContract] = useState(null)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   const [previewTitle, setPreviewTitle] = useState('')
@@ -31,14 +32,15 @@ const ApplyForLeaderPage = () => {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      setSigner(signer)
+      signer = provider.getSigner()
+      // setSigner(signer)
       const contract = new ethers.Contract(
         '0xD3F1d851Df6974b3683a84947C3D55bCb375cc19',
         VaultFactory.abi,
         provider
       )
-      setDaiContract(contract)
+      daiContract = contract
+      // setDaiContract(contract)
     }
   }
   useEffect(() => {

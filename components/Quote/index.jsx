@@ -5,26 +5,15 @@ import {
   POLYGON_TOKENS_BY_ADDRESS,
 } from '../../lib/constants'
 import { fetcher } from '../Price'
-import type { PriceResponse, QuoteResponse } from '../api/types'
+// import type { PriceResponse, QuoteResponse } from '../api/types'
 import { ethers } from 'ethers'
 import {
   useAccount,
   useSendTransaction,
   usePrepareSendTransaction,
-  type Address,
 } from 'wagmi'
 
-export default function QuoteView({
-  price,
-  quote,
-  setQuote,
-  takerAddress,
-}: {
-  price: PriceResponse
-  quote: QuoteResponse | undefined
-  setQuote: (price: any) => void
-  takerAddress: Address | undefined
-}) {
+export default function QuoteView({ price, quote, setQuote, takerAddress }) {
   // fetch quote here
 
   const { address } = useAccount()

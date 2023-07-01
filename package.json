@@ -50,7 +50,7 @@
     "react-three-fiber": "^5.3.22",
     "react-transition-group": "^4.4.5",
     "swiper": "^8.0.7",
-    "swr": "2.1.5",
+    "swr": "^2.1.5",
     "three": "^0.153.0",
     "use-debounce": "^7.0.1",
     "uws": "^200.0.0",

@@ -179,15 +179,25 @@ const mtAbi = [
     type: 'event',
   },
 ]
+let signer: any
+let daiContract: any
+let erc20Contract: any
 const PortfolioList = () => {
-  const [signer, setSigner] = useState(undefined)
-  const [daiContract, setDaiContract] = useState(null)
-  const [carInfo, setCarInfo] = useState<CarInfo>({})
+  // const [signer, setSigner] = useState(undefined)
+  // const [daiContract, setDaiContract] = useState(null)
+  const [carInfo, setCarInfo] = useState<CarInfo>({
+    guardianAddress: '',
+    name: '',
+    age: 0,
+    address: '',
+    tags: [],
+    owner: '',
+  })
   const [userAddress, setUserAddress] = useState('')
   const [assetsList, setAssetsList] = useState([])
   const [TradeHistoryList, setTradeHistoryList] = useState([])
   const [followersList, setFollowersList] = useState([])
-  const [erc20Contract, setErc20Contract] = useState(null)
+  // const [erc20Contract, setErc20Contract] = useState(null)
   const [userBalance, seUserBalance] = useState(0)
   const [vaultBaseAssetAddress, setVaultBaseAssetAddress] = useState('')
   const [depositAmount, setDepositAmount] = useState(0)
@@ -199,25 +209,28 @@ const PortfolioList = () => {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
+      signer = provider.getSigner()
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       })
       // console.log(provider._getAddress())
       // console.log(ethers.utils.getAddress(address))
-      setSigner(signer)
-      const contract = new ethers.Contract(address, GuardianLogic.abi, provider)
-      setDaiContract(contract)
-      const erc20Contract = new ethers.Contract(
+      // setSigner(signer)
+
+      daiContract = new ethers.Contract(address, GuardianLogic.abi, provider)
+      // setDaiContract(contract)
+      // daiContract = contract
+      let erc20Contract = new ethers.Contract(
         denominationAsset,
         erc20,
         provider
       )
       console.log(erc20Contract)
-      erc20Contract.balanceOf(accounts[0]).then((d) => {
+
+      erc20Contract.balanceOf(accounts[0]).then((d: any) => {
         seUserBalance(d.toString() / 10 ** 18)
       })
-      setErc20Contract(erc20Contract)
+      // setErc20Contract(erc20Contract)
     }
   }
   const [loading, setLoading] = useState(true)
@@ -341,7 +354,7 @@ const PortfolioList = () => {
                 max={Math.floor(userBalance * 10000) / 10000}
                 min={0}
                 step={0.01}
-                onChange={setDepositAmount}
+                // onChange={setDepositAmount}
               />
               <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
                 Deposit
