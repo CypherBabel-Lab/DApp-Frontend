@@ -33,6 +33,6 @@
     "components/Price/index.jsx",
     "components/Quote/index.jsx",
     "pages/swap.jsx"
-  ],
+, "pages/portfolio.jsx"  ],
   "exclude": ["node_modules"]
 }

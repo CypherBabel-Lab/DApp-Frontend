@@ -47,11 +47,13 @@ const ApplyForLeaderPage = () => {
     getSigner()
   }, [])
   async function createValut() {
-    console.log(selectAsset)
+    console.log(daiContract)
+    console.log(name, symbol, selectAsset, new Date().getTime())
+
     const vaultName = name
     const vaultSymbol = symbol
-    const denominationAsset = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889'
-    const sharesActionTimelock = new Date().getTime()
+    const denominationAsset = selectAsset
+    const sharesActionTimelock = 0
 
     try {
       if (signer && daiContract) {
@@ -62,7 +64,7 @@ const ApplyForLeaderPage = () => {
             vaultSymbol,
             denominationAsset,
             sharesActionTimelock,
-            { gasLimit: 21000000 }
+            { gasLimit: 10000000 }
           )
         const receipt = await transaction.wait()
         console.log(receipt)
@@ -106,6 +108,11 @@ const ApplyForLeaderPage = () => {
             style={{ width: 120 }}
             onChange={handleChange}
             options={[
+              {
+                value: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+                label: 'MATIC',
+              },
+
               {
                 value: '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747',
                 label: 'USDC',

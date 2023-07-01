@@ -2,27 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { Card, Skeleton, Avatar, Button, Tabs, InputNumber } from 'antd'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
-import type { TabsProps } from 'antd'
+// import type { TabsProps } from 'antd'
 import CurrentPositions from '~/components/protfolioTabs/CurrentPositions'
 import TradeHistory from '~/components/protfolioTabs/TradeHistory'
 import StatisticalData from '~/components/protfolioTabs/StatisticalData'
 import DepositsAndWithdrawals from '~/components/protfolioTabs/DepositsAndWithdrawals'
 import GuardianLogic from '../data/GuardianLogic.json'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import { vault_detailsApi } from '../data/api/AllApi'
 import { useRouter } from 'next/router'
 import erc20 from '../data/erc20.json'
 // import { BigNumber } from 'ethers'
 // import BigNumber from 'bignumber.js'
 // import InputNumber from 'antd/es/input/InputNumber'
-interface CarInfo {
-  guardianAddress: string
-  name: string
-  age: number
-  address: string
-  tags: string[]
-  owner: string
-}
+// interface CarInfo {
+//   guardianAddress: string
+//   name: string
+//   age: number
+//   address: string
+//   tags: string[]
+//   owner: string
+// }
 const { Meta } = Card
 let provider
 
@@ -179,13 +179,13 @@ const mtAbi = [
     type: 'event',
   },
 ]
-let signer: any
-let daiContract: any
-let erc20Contract: any
+let signer
+let daiContract
+let erc20Contract
 const PortfolioList = () => {
   // const [signer, setSigner] = useState(undefined)
   // const [daiContract, setDaiContract] = useState(null)
-  const [carInfo, setCarInfo] = useState<CarInfo>({
+  const [carInfo, setCarInfo] = useState({
     guardianAddress: '',
     name: '',
     age: 0,
@@ -202,10 +202,10 @@ const PortfolioList = () => {
   const [vaultBaseAssetAddress, setVaultBaseAssetAddress] = useState('')
   const [depositAmount, setDepositAmount] = useState(0)
   const router = useRouter()
-  const onChange = (key: string) => {
+  const onChange = (key) => {
     console.log(key)
   }
-  async function getSigner(address: string, denominationAsset: string) {
+  async function getSigner(address, denominationAsset) {
     if (window.ethereum) {
       await window.ethereum.enable()
       provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -227,7 +227,7 @@ const PortfolioList = () => {
       )
       console.log(erc20Contract)
 
-      erc20Contract.balanceOf(accounts[0]).then((d: any) => {
+      erc20Contract.balanceOf(accounts[0]).then((d) => {
         seUserBalance(d.toString() / 10 ** 18)
       })
       // setErc20Contract(erc20Contract)
@@ -240,6 +240,7 @@ const PortfolioList = () => {
       setAssetsList(d.data.assets)
       setTradeHistoryList(d.data.activities)
       setCarInfo(d.data)
+      console.log(d.data.guardianAddress)
       getSigner(d.data.guardianAddress, d.data.denominationAsset)
       setVaultBaseAssetAddress(d.data.denominationAsset)
       setFollowersList(d.data.followers)
@@ -248,7 +249,7 @@ const PortfolioList = () => {
       setLoading(false)
     }, 1500)
   }, [])
-  const items: TabsProps['items'] = [
+  const items = [
     {
       key: '1',
       label: `Current Positions`,
@@ -291,16 +292,17 @@ const PortfolioList = () => {
       await approveTx.wait()
     }
     console.log(depositAmount)
-
-    const investmentAmount = ethers.utils.formatUnits(depositAmount, 18)
-    const minSharesQuantity = 1
+    const investmentAmount = (depositAmount * 10 ** 18).toString()
+    const minSharesQuantity = 0.00001 * 10 ** 18
+    console.log(daiContract)
+    // console.log(depositAmount, investmentAmount, investmentAmount.toString())
     try {
       if (signer && daiContract) {
         // empower wmt
         const transaction = await daiContract
           .connect(signer)
           .buyShares(investmentAmount, minSharesQuantity, {
-            gasLimit: 21000000,
+            gasLimit: 15000000,
           })
         const receipt = await transaction.wait()
         console.log(receipt)
@@ -309,7 +311,7 @@ const PortfolioList = () => {
       console.log('交互错误:', error)
     }
   }
-  const followEvt = async (address: string) => {
+  const followEvt = async (address) => {
     let signer
     let contract
     if (window.ethereum) {
@@ -354,7 +356,7 @@ const PortfolioList = () => {
                 max={Math.floor(userBalance * 10000) / 10000}
                 min={0}
                 step={0.01}
-                // onChange={setDepositAmount}
+                onChange={setDepositAmount}
               />
               <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
                 Deposit
