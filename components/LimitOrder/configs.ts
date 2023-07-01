@@ -13,9 +13,10 @@ export const MNEMONIC =
   'concert load couple harbor equip island argue ramp clarify fence smart topic'
 export const BASE_DERIVATION_PATH = `44'/60'/0'/0`
 export const GANACHE_CONFIGS: NetworkSpecificConfigs = {
-  rpcUrl: 'http://127.0.0.1:8545',
+  rpcUrl:
+    'https://polygon-mumbai.infura.io/v3/317d0e9e84444c67b790b9b1e1123ff3',
   networkId: GANACHE_NETWORK_ID,
-  chainId: 1337,
+  chainId: 80001,
 }
 export const ROPSTEN_CONFIGS: NetworkSpecificConfigs = {
   rpcUrl: process.env.ROPSTEN_RPC_URL || '',

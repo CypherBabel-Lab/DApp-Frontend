@@ -47,7 +47,7 @@ const ApplyForLeaderPage = () => {
     console.log(selectAsset)
     const vaultName = name
     const vaultSymbol = symbol
-    const denominationAsset = selectAsset
+    const denominationAsset = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889'
     const sharesActionTimelock = new Date().getTime()
 
     try {

@@ -249,24 +249,25 @@ const PortfolioList = () => {
       carInfo.guardianAddress // 合约地址或被授权者的地址
     )
     // if
-    if (allowanceAmount.toString() === '0') {
-      const amountToApprove = ethers.constants.MaxUint256
-      const approveTx = await wmaticContract.approve(
-        carInfo.guardianAddress, //
-        amountToApprove
-      )
-      await approveTx.wait()
-    }
-    const investmentAmount = 0.001 * 10 ** 18
-    const minSharesQuantity = 0.001 * 10 ** 18
+    console.log(allowanceAmount.toString())
+
+    // if (allowanceAmount.toString() === '0') {
+    const amountToApprove = ethers.constants.MaxUint256
+    const approveTx = await wmaticContract.approve(
+      carInfo.guardianAddress, //
+      amountToApprove
+    )
+    await approveTx.wait()
+    // }
+    const investmentAmount = 0.00000001 * 10 ** 18
+    const minSharesQuantity = 1
     try {
       if (signer && daiContract) {
         // empower wmt
-
         const transaction = await daiContract
           .connect(signer)
           .buyShares(investmentAmount, minSharesQuantity, {
-            gasLimit: 2100000,
+            gasLimit: 21000000,
           })
         const receipt = await transaction.wait()
         console.log(receipt)
