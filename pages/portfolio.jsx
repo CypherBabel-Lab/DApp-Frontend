@@ -320,10 +320,11 @@ const PortfolioList = () => {
       signer = provider.getSigner()
       contract = new ethers.Contract(address, GuardianLogic.abi, provider)
     }
+    console.log(contract)
     try {
       if (signer && contract) {
         const transaction = await contract.connect(signer).Follow({
-          gasLimit: 21000000,
+          gasLimit: 2100000,
         })
         const receipt = await transaction.wait()
       }
