@@ -7,6 +7,7 @@ import { BellFilled } from '@ant-design/icons'
 import { getNotificationListApi } from '../data/api/AllApi'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import logo from '~/public/images/logo.png'
 // import Image from 'next/image'
 function formatString(input) {
   if (input.length <= 6) {
@@ -65,22 +66,48 @@ const Nav = ({ ConnectKitButton }) => {
     </>
   )
   return (
-    <nav style={{ backgroundColor: "black", position: "relative" }} className="w-full p-4 border-b">
-      <div className="flex justify-end">
-        <div style={{ position: "absolute", left: "20px" }}>
-          <Image src={"/images/logo.png"} width={50} height={50} />
+    <nav
+      // style={{ position: 'relative' }}
+      className="w-full p-4 border-b border-gray-800 bg-zinc-950"
+    >
+      {/* <Link href="/">
+        <div className={classes.logoCenter}>
+          <Image src="/images/logo.png" alt="Logo" width={35} height={35} />
+          <div>
+            <span className={classes.logo_text}>InCre</span>
+            <span className={classes.beta_marker}>BETA</span>
+          </div>
         </div>
-        <Popover
-          placement="bottom"
-          onMouseEnter={handleMouseEnter}
-          content={content}
-        // arrow={mergedArrow}
-        >
-          <BellFilled
-            style={{ color: '#999', cursor: 'pointer', padding: '0 10px' }}
-          />
-        </Popover>
-        <ConnectKitButton />
+      </Link> */}
+
+      <div className="flex justify-between">
+        <Link href="/discover/CopyInvesting">
+          <div className="flex items-center cursor-pointer">
+            <div className="flex mr-2">
+              <Image src={logo} width={36} height={36} />
+            </div>
+            <div className="flex align-top">
+              <span className="text-2xl font-semibold text-white">
+                CBIndex DApp
+              </span>
+              <span className="px-2 text-sm text-white">DEMO</span>
+            </div>
+          </div>
+        </Link>
+        <div className="flex">
+          <Popover
+            placement="bottom"
+            onMouseEnter={handleMouseEnter}
+            content={content}
+            // arrow={mergedArrow}
+          >
+            <BellFilled
+              style={{ color: '#999', cursor: 'pointer', padding: '0 10px' }}
+            />
+          </Popover>
+          <ConnectKitButton />
+        </div>
+
         {/* <Connect /> */}
       </div>
     </nav>

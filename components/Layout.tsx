@@ -21,7 +21,7 @@ const Layout = ({ children, ConnectKitButton }: PropsWithChildren<LayoutProps>) 
   return (
     <>
       <Nav ConnectKitButton={ConnectKitButton} />
-      <div className="min-h-screen bg-zinc-900">
+      <div className="h-full bg-zinc-900">
         <main>{children}</main>
       </div>
       <Footer />
