@@ -171,7 +171,7 @@ const PortfolioList = (props: any) => {
               >
                 <div className="flex">
                   <div> {it.headsculpture}</div>
-                  <div className="ml-3  flex flex-col">
+                  <div className="flex flex-col ml-3">
                     <span className="text-xl font-bold text-zinc-100">
                       {it.name}
                     </span>
@@ -208,7 +208,7 @@ const PortfolioList = (props: any) => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-3 flex items-center justify-around">
+                  <div className="flex items-center justify-around mt-3">
                     <div>
                       <span className="text-2xl font-semibold">
                         <InitMoney num={it.nav} />
@@ -230,7 +230,7 @@ const PortfolioList = (props: any) => {
                 description={
                   <Button
                     style={{ lineHeight: '16px', float: 'right' }}
-                    className="rounded-md bg-gradient-to-r from-gray-800 to-black px-4 py-2 text-white hover:opacity-90"
+                    className="px-4 py-2 text-white rounded-md bg-gradient-to-r from-gray-800 to-black hover:opacity-90"
                     onClick={() => follow(it.copyAddress)}
                   >
                     <span className="font-bold">Copy</span>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs } from 'antd'
 import type { TabsProps } from 'antd'
-import Spotlight from './DucumentaryTabs/Spotlight'
-import PortfolioList from './DucumentaryTabs/PortfolioList'
+// import Spotlight from './CopyInvesting/Spotlight'
+import CopyInvestingFundList from './CopyInvesting/CopyInvestingFundList'
 
 const Documentary = () => {
   const [selectTabsKey, setSelectTabsKey] = useState<string>('1')
@@ -11,15 +11,15 @@ const Documentary = () => {
   }
 
   const items: TabsProps['items'] = [
+    // {
+    //   key: '1',
+    //   label: `In The Spotlight`,
+    //   children: <Spotlight />,
+    // },
     {
       key: '1',
-      label: `In The Spotlight`,
-      children: <Spotlight />,
-    },
-    {
-      key: '2',
-      label: `Portfolio List`,
-      children: <PortfolioList selectTabsKey={selectTabsKey} />,
+      label: `Copy-Investing Funds`,
+      children: <CopyInvestingFundList selectTabsKey={selectTabsKey} />,
     },
   ]
 

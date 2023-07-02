@@ -4,7 +4,7 @@ import Vaults from './Vaults'
 import Integrations from './Integrations'
 import Assets from './Assets'
 import Page from './Page'
-import Ducumentary from './Ducumentary'
+import Ducumentary from './CopyInvesting'
 const Discover = () => {
   const router = useRouter()
   return (
