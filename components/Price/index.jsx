@@ -1,6 +1,6 @@
 import qs from 'qs'
 import useSWR from 'swr'
-import { ConnectKitButton } from 'connectkit'
+// import { ConnectKitButton } from 'connectkit'
 import { useState, ChangeEvent, useEffect } from 'react'
 import { ethers } from 'ethers'
 import {
@@ -194,28 +194,28 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
           }}
         />
       ) : (
-        // <></>
-        <ConnectKitButton.Custom>
-          {({
-            isConnected,
-            isConnecting,
-            show,
-            hide,
-            address,
-            ensName,
-            chain,
-          }) => {
-            return (
-              <button
-                onClick={show}
-                type="button"
-                className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-              >
-                {isConnected ? address : 'Connect Wallet'}
-              </button>
-            )
-          }}
-        </ConnectKitButton.Custom>
+        <></>
+        // <ConnectKitButton.Custom>
+        //   {({
+        //     isConnected,
+        //     isConnecting,
+        //     show,
+        //     hide,
+        //     address,
+        //     ensName,
+        //     chain,
+        //   }) => {
+        //     return (
+        //       <button
+        //         onClick={show}
+        //         type="button"
+        //         className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        //       >
+        //         {isConnected ? address : 'Connect Wallet'}
+        //       </button>
+        //     )
+        //   }}
+        // </ConnectKitButton.Custom>
       )}
 
       {isLoadingPrice && (

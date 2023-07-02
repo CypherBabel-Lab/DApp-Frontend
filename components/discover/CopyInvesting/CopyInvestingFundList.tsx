@@ -45,37 +45,27 @@ const CopyInvestingFundList = (props: any) => {
   const [carLoading, setCarLoading] = useState<boolean>(true)
   const [carInfo, setCarInfo] = useState<any[]>([])
   function getTimeDifference(targetTime: any) {
-    // 获取当前时间
     const currentTime = new Date()
-
-    // 获取给定时间
     const givenTime = new Date(targetTime)
-
-    // 计算时间差（以毫秒为单位）
     const timeDifference = Number(currentTime) - Number(givenTime)
 
-    // 将时间差转换为秒、分钟、小时、天等单位
     const seconds = Math.floor(timeDifference / 1000)
     const minutes = Math.floor(seconds / 60)
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
 
     // 构建时间差字符串
-    const timeDiffString = `${days}天 ${hours % 24}小时 ${minutes % 60}分钟 ${
-      seconds % 60
-    }秒`
+    const timeDiffString = `${days}天 ${hours % 24}小时 ${minutes % 60}分钟 ${seconds % 60
+      }秒`
 
     return timeDiffString
   }
   useEffect(() => {
-    if (selectTabsKey === '2') {
-      setTimeout(() => {
-        setCarLoading(false)
-      }, 1500)
-    } else {
-      setCarLoading(true)
-    }
-  }, [selectTabsKey])
+    setTimeout(() => {
+      setCarLoading(false)
+    }, 1500)
+
+  }, [])
   useEffect(() => {
     // getSigner()
     vault_listApi().then((d) => {

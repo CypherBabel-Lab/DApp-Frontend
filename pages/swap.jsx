@@ -3,6 +3,7 @@ import SwapPage from '~/components/SwapPage'
 import PriceView from '../components/Price'
 import QuoteView from '../components/Quote'
 // import type { PriceResponse } from './api/types'
+import Sidbar from '~/components/Sidbar'
 import { useAccount } from 'wagmi'
 const Swap = () => {
   const [tradeDirection, setTradeDirection] = useState('sell')
@@ -17,27 +18,29 @@ const Swap = () => {
   }, [])
   return (
     <>
-      {show && (
-        <div
-          className={`flex min-h-screen flex-col items-center justify-between p-24`}
-        >
-          {finalize && price ? (
-            <QuoteView
-              takerAddress={address}
-              price={price}
-              quote={quote}
-              setQuote={setQuote}
-            />
-          ) : (
-            <PriceView
-              takerAddress={address}
-              price={price}
-              setPrice={setPrice}
-              setFinalize={setFinalize}
-            />
-          )}
-        </div>
-      )}
+      <Sidbar>
+        {show && (
+          <div
+            className={`flex min-h-screen flex-col items-center justify-between p-24`}
+          >
+            {finalize && price ? (
+              <QuoteView
+                takerAddress={address}
+                price={price}
+                quote={quote}
+                setQuote={setQuote}
+              />
+            ) : (
+              <PriceView
+                takerAddress={address}
+                price={price}
+                setPrice={setPrice}
+                setFinalize={setFinalize}
+              />
+            )}
+          </div>
+        )}
+      </Sidbar>
     </>
   )
 }

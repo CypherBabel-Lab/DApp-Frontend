@@ -71,7 +71,7 @@ const daiAbi = [
     type: 'function',
   },
 ]
-const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
+// const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
 const projectId = 'bce62feae59107ac8ebbdc9aa8810513'
 let provider = ''
 const Connect = () => {
@@ -116,20 +116,20 @@ const Connect = () => {
       console.log('交互错误:', error)
     }
   }
-  const config = createConfig(
-    getDefaultConfig({
-      // Required API Keys
-      alchemyId: 'Ah1uBeiN9iaNdSMTMRPHMT2vp2-nkVel', // or infuraId
-      walletConnectProjectId: projectId,
-      // Required
-      appName: 'QWE',
-      // Optional
-      chains,
-      appDescription: 'Your App Description',
-      // appUrl: 'https://app.cbindex.finance', // your app's url
-      // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
-    })
-  )
+  // const config = createConfig(
+  //   getDefaultConfig({
+  //     // Required API Keys
+  //     alchemyId: 'Ah1uBeiN9iaNdSMTMRPHMT2vp2-nkVel', // or infuraId
+  //     walletConnectProjectId: projectId,
+  //     // Required
+  //     appName: 'QWE',
+  //     // Optional
+  //     chains,
+  //     appDescription: 'Your App Description',
+  //     // appUrl: 'https://app.cbindex.finance', // your app's url
+  //     // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  //   })
+  // )
 
   async function getSigner() {
     if (window.ethereum) {

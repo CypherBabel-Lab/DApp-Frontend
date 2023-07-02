@@ -107,7 +107,6 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
       <button
         className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         onClick={() => {
-          console.log('submitting quote to blockchain')
           sendTransaction && sendTransaction()
         }}
       >

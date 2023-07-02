@@ -20,14 +20,14 @@ module.exports = {
       {
         permanent: false,
         source: '/',
-        destination: '/discover',
+        destination: '/discover/CopyInvesting',
       },
       // Have integrations as the default partners page
-      {
-        permanent: false,
-        source: '/discover/',
-        destination: '/discover',
-      },
+      // {
+      //   permanent: false,
+      //   source: '/',
+      //   destination: '/discover',
+      // },
     ]
   },
   async rewrites() {

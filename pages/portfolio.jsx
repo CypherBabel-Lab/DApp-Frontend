@@ -213,10 +213,6 @@ const PortfolioList = () => {
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       })
-      // console.log(provider._getAddress())
-      // console.log(ethers.utils.getAddress(address))
-      // setSigner(signer)
-
       daiContract = new ethers.Contract(address, GuardianLogic.abi, provider)
       // setDaiContract(contract)
       // daiContract = contract
@@ -225,7 +221,6 @@ const PortfolioList = () => {
         erc20,
         provider
       )
-      console.log(erc20Contract)
 
       erc20Contract.balanceOf(accounts[0]).then((d) => {
         seUserBalance(d.toString() / 10 ** 18)
@@ -240,7 +235,6 @@ const PortfolioList = () => {
       setAssetsList(d.data.assets)
       setTradeHistoryList(d.data.activities)
       setCarInfo(d.data)
-      console.log(d.data.guardianAddress)
       getSigner(d.data.guardianAddress, d.data.denominationAsset)
       setVaultBaseAssetAddress(d.data.denominationAsset)
       setFollowersList(d.data.followers)
@@ -282,7 +276,7 @@ const PortfolioList = () => {
       carInfo.guardianAddress // 合约地址或被授权者的地址
     )
     // if
-    console.log(allowanceAmount.toString())
+
     if (allowanceAmount.toString() === '0') {
       const amountToApprove = ethers.constants.MaxUint256
       const approveTx = await wmaticContract.approve(
@@ -291,11 +285,8 @@ const PortfolioList = () => {
       )
       await approveTx.wait()
     }
-    console.log(depositAmount)
     const investmentAmount = (depositAmount * 10 ** 18).toString()
     const minSharesQuantity = 0.00001 * 10 ** 18
-    console.log(daiContract)
-    // console.log(depositAmount, investmentAmount, investmentAmount.toString())
     try {
       if (signer && daiContract) {
         // empower wmt

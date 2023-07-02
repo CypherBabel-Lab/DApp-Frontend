@@ -45,8 +45,6 @@ const ApplyForLeaderPage = () => {
     getSigner()
   }, [])
   async function createValut() {
-    console.log(daiContract)
-    console.log(name, symbol, selectAsset, new Date().getTime())
 
     const vaultName = name
     const vaultSymbol = symbol
@@ -65,7 +63,6 @@ const ApplyForLeaderPage = () => {
             { gasLimit: 10000000 }
           )
         const receipt = await transaction.wait()
-        console.log(receipt)
       }
     } catch (error) {
       console.log('Interaction Error:', error)
