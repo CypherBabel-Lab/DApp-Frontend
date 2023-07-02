@@ -2,7 +2,7 @@
 
 This is the frontend of the CBIndex DApp. 
 
-### 🙋‍♀️ What is CBIndex
+### 🙋‍♀️What is CBIndex
 
 As a decentralized asset management platform, CBIndex provides various crypto investment tools built on the CBI protocol, fostering an innovative environment for individuals and entities to manage and grow their crypto assets. 
 
