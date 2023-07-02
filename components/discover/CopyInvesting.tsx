@@ -4,7 +4,7 @@ import type { TabsProps } from 'antd'
 // import Spotlight from './CopyInvesting/Spotlight'
 import CopyInvestingFundList from './CopyInvesting/CopyInvestingFundList'
 
-const Documentary = () => {
+const CopyInvesting = () => {
   const [selectTabsKey, setSelectTabsKey] = useState<string>('1')
   const onChange = (key: string) => {
     setSelectTabsKey(key)
@@ -35,4 +35,4 @@ const Documentary = () => {
   )
 }
 
-export default Documentary
+export default CopyInvesting

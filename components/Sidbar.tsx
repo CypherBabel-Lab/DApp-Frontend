@@ -39,7 +39,7 @@ const Sidbar = (props: any) => {
                   </div>
                   <div className="flex p-2 rounded-md group/item hover:bg-slate-200">
                     <button
-                      onClick={() => router.push('/discover/ducumentary')}
+                      onClick={() => router.push('/discover/CopyInvesting')}
                       className="block text-base text-scale-1200 "
                     >
                       Copy-Investing
