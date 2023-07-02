@@ -12,11 +12,11 @@ const Sidbar = (props: any) => {
     <>
       <SectionContainer>
         <div className="flex lg:gap-16 lg:space-y-0 xl:gap-16">
-          <div className="p-4 rounded-lg w-72 bg-slate-700 lg:col-span-4 xl:col-span-3">
+          <div className="px-2 py-4 rounded-lg py w-72 bg-slate-700 lg:col-span-4 xl:col-span-3">
             <div>
               <div className="hidden lg:block">
                 <div className="space-y-1">
-                  <div className="flex">
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
                     <span>
                       <Link href="https://app.cbindex.finance/">
                         <a
@@ -37,47 +37,58 @@ const Sidbar = (props: any) => {
                       />
                     </span>
                   </div>
-                  <button
-                    onClick={() => router.push('/discover/ducumentary')}
-                    className="block text-base text-scale-1200 "
-                  >
-                    Copy-Investing
-                  </button>
-
-                  <button
-                    onClick={() => router.push('/discover/vaults')}
-                    className="block text-base text-scale-1200 disabled:opacity-30"
-                    disabled
-                  >
-                    Active Fund
-                  </button>
-                  <button
-                    onClick={() => router.push('/discover/vaults')}
-                    className="block text-base text-scale-1200 disabled:opacity-30"
-                    disabled
-                  >
-                    Index Fund
-                  </button>
-                  <button
-                    onClick={() => router.push('/swap')}
-                    className="block text-base text-scale-1200"
-                  >
-                    Swap
-                  </button>
-                  <button
-                    onClick={() => router.push('/discover/vaults')}
-                    className="block text-base text-scale-1200 disabled:opacity-30"
-                    disabled
-                  >
-                    Integrations
-                  </button>
-                  <button
-                    onClick={() => router.push('/discover/vaults')}
-                    className="block text-base text-scale-1200 disabled:opacity-30"
-                    disabled
-                  >
-                    My Wallet
-                  </button>
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
+                    <button
+                      onClick={() => router.push('/discover/ducumentary')}
+                      className="block text-base text-scale-1200 "
+                    >
+                      Copy-Investing
+                    </button>
+                  </div>
+                  <div className="flex p-2 rounded-md">
+                    <button
+                      onClick={() => router.push('/discover/vaults')}
+                      className="block text-base text-scale-1200 disabled:opacity-30"
+                      disabled
+                    >
+                      Active Fund
+                    </button>
+                  </div>
+                  <div className="flex p-2 rounded-md">
+                    <button
+                      onClick={() => router.push('/discover/vaults')}
+                      className="block text-base text-scale-1200 disabled:opacity-30"
+                      disabled
+                    >
+                      Index Fund
+                    </button>
+                  </div>
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
+                    <button
+                      onClick={() => router.push('/swap')}
+                      className="block text-base text-scale-1200"
+                    >
+                      Swap
+                    </button>
+                  </div>
+                  <div className="flex p-2 rounded-md">
+                    <button
+                      onClick={() => router.push('/discover/vaults')}
+                      className="block text-base text-scale-1200 disabled:opacity-30"
+                      disabled
+                    >
+                      Integrations
+                    </button>
+                  </div>
+                  <div className="flex p-2 rounded-md">
+                    <button
+                      onClick={() => router.push('/discover/vaults')}
+                      className="block text-base text-scale-1200 disabled:opacity-30"
+                      disabled
+                    >
+                      My Wallet
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="mt-0 lg:mt-96">
