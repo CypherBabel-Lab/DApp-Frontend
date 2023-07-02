@@ -12,10 +12,9 @@ It delivers a democratized ecosystem where anyone can effortlessly make crypto i
 
 Using the CBIndex simulator, one can try out, learn and practice crypto investments in a well-simulated environment. With the index tool, anyone can become a crypto index provider by building, managing, and promoting their crypto indices.
 
----
-
 You can visit a live version at **https://dapp.cbindex.finance**
 
+---
 
 ## Running locally in development mode
 
