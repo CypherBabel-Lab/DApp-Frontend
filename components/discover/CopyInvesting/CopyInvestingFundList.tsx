@@ -21,7 +21,7 @@ function splitString(inputString: string): string {
 let provider
 let signer: any
 let daiContract: any
-const PortfolioList = (props: any) => {
+const CopyInvestingFundList = (props: any) => {
   // const [signer, setSigner] = useState(undefined)
   // const [daiContract, setDaiContract] = useState(null)
   async function getSigner() {
@@ -103,7 +103,7 @@ const PortfolioList = (props: any) => {
           nav: '',
           peopleNum: 0,
           copyAddress: '',
-          detaiAddress: ''
+          detaiAddress: '',
         }
         tempt.name = d.data.list[i].name
         tempt.address = d.data.list[i].owner
@@ -136,7 +136,7 @@ const PortfolioList = (props: any) => {
         const receipt = await transaction.wait()
       }
     } catch (error) {
-      console.log('交互错误:', error)
+      console.log('Interaction Error', error)
     }
   }
   return (
@@ -244,4 +244,4 @@ const PortfolioList = (props: any) => {
     </>
   )
 }
-export default PortfolioList
+export default CopyInvestingFundList

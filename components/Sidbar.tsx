@@ -12,7 +12,7 @@ const Sidbar = (props: any) => {
     <>
       <SectionContainer>
         <div className="flex lg:gap-16 lg:space-y-0 xl:gap-16">
-          <div className="px-2 py-4 rounded-lg py w-72 bg-slate-700 lg:col-span-4 xl:col-span-3">
+          <div className="px-2 py-4 rounded-lg w-72 bg-slate-700 lg:col-span-4 xl:col-span-3">
             <div>
               <div className="hidden lg:block">
                 <div className="space-y-1">
@@ -40,7 +40,7 @@ const Sidbar = (props: any) => {
                   <div className="flex p-2 rounded-md group/item hover:bg-slate-200">
                     <button
                       onClick={() => router.push('/discover/CopyInvesting')}
-                      className="block text-base text-scale-1200 "
+                      className="block text-base text-scale-1200"
                     >
                       Copy-Investing
                     </button>
