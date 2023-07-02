@@ -1,4 +1,4 @@
-## 🚨 CBIndex DApp
+## 🌈 CBIndex DApp
 
 This is the frontend of the CBIndex DApp. 
 
