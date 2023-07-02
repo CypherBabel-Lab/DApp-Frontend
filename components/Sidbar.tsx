@@ -16,7 +16,7 @@ const Sidbar = (props: any) => {
             <div>
               <div className="hidden lg:block">
                 <div className="space-y-1">
-                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-200">
                     <span>
                       <Link href="https://app.cbindex.finance/">
                         <a
@@ -37,7 +37,7 @@ const Sidbar = (props: any) => {
                       />
                     </span>
                   </div>
-                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-200">
                     <button
                       onClick={() => router.push('/discover/ducumentary')}
                       className="block text-base text-scale-1200 "
@@ -63,7 +63,7 @@ const Sidbar = (props: any) => {
                       Index Fund
                     </button>
                   </div>
-                  <div className="flex p-2 rounded-md group/item hover:bg-slate-100">
+                  <div className="flex p-2 rounded-md group/item hover:bg-slate-200">
                     <button
                       onClick={() => router.push('/swap')}
                       className="block text-base text-scale-1200"
