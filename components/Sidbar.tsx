@@ -1,82 +1,94 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import PartnerLinkBox from '~/components/PartnerLinkBox'
+import Link from 'next/link'
+import Image from 'next/image'
+import FastActionBox from '~/components/FastActionBox'
 import SectionContainer from '~/components/SectionContainer'
+import link_icon from '~/public/images/link_blank.png'
+import { FundOutlined } from '@ant-design/icons'
 const Sidbar = (props: any) => {
   const router = useRouter()
   return (
     <>
       <SectionContainer>
         <div className="flex lg:gap-16 lg:space-y-0 xl:gap-16">
-          <div className="w-72 rounded-lg bg-slate-700 p-4 lg:col-span-4 xl:col-span-3">
+          <div className="p-4 rounded-lg w-72 bg-slate-700 lg:col-span-4 xl:col-span-3">
             <div>
               <div className="hidden lg:block">
                 <div className="space-y-1">
+                  <div className="flex">
+                    <span>
+                      <Link href="https://app.cbindex.finance/">
+                        <a
+                          className="block mr-2 text-base text-scale-1200"
+                          target={'_blank'}
+                        >
+                          CBIndex App
+                        </a>
+                      </Link>
+                    </span>
+
+                    <span className="flex items-center">
+                      <Image
+                        src={link_icon}
+                        width={20}
+                        height={20}
+                        alt="link"
+                      />
+                    </span>
+                  </div>
                   <button
-                    onClick={() => router.push('/discover')}
-                    className="block text-base text-scale-1100"
+                    onClick={() => router.push('/discover/ducumentary')}
+                    className="block text-base text-scale-1200 "
                   >
-                    Discover
+                    Copy-Investing
+                  </button>
+
+                  <button
+                    onClick={() => router.push('/discover/vaults')}
+                    className="block text-base text-scale-1200 disabled:opacity-30"
+                    disabled
+                  >
+                    Active Fund
                   </button>
                   <button
                     onClick={() => router.push('/discover/vaults')}
-                    className="block text-base text-scale-1100"
+                    className="block text-base text-scale-1200 disabled:opacity-30"
+                    disabled
                   >
-                    Vaults
-                  </button>
-                  <button className="block text-base text-scale-1100">
-                    Network
+                    Index Fund
                   </button>
                   <button
-                    onClick={() => router.push('/discover/assets')}
-                    className="block text-base text-scale-1100"
+                    onClick={() => router.push('/swap')}
+                    className="block text-base text-scale-1200"
                   >
-                    Assets
+                    Swap
                   </button>
                   <button
-                    onClick={() => router.push('/discover/integrations')}
-                    className="block text-base text-scale-1100"
+                    onClick={() => router.push('/discover/vaults')}
+                    className="block text-base text-scale-1200 disabled:opacity-30"
+                    disabled
                   >
                     Integrations
                   </button>
                   <button
-                    onClick={() => router.push('/discover/ducumentary')}
-                    className="block text-base text-scale-1100"
+                    onClick={() => router.push('/discover/vaults')}
+                    className="block text-base text-scale-1200 disabled:opacity-30"
+                    disabled
                   >
-                    Ducumentary
-                  </button>
-                  <button
-                    onClick={() => router.push('/swap')}
-                    className="block text-base text-scale-1100"
-                  >
-                    Swap
+                    My Wallet
                   </button>
                 </div>
               </div>
               <div className="mt-0 lg:mt-96">
                 <div className="grid grid-cols-2 gap-8 lg:grid-cols-1">
-                  <PartnerLinkBox
-                    title="Create your first vault"
-                    color="blue"
-                    description="Create an CBIndex vault and start managing your assets."
+                  <FastActionBox
+                    title="Copy-Investing Fund"
+                    color="green"
+                    description="Create a Copy-Investing Fund and start leading the investment."
                     // href={`/vault/create`}
                     href={`/individualfunds`}
-                    icon={
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    }
+                    icon={<FundOutlined />}
                   />
                 </div>
               </div>

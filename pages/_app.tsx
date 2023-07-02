@@ -30,8 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       appName: 'QWE',
       // Optional
       chains,
-      appDescription: 'Your App Description',
-      appUrl: 'https://app.cbindex.finance', // your app's url
+      appDescription: 'CBIndex | One-stop Toolkit for Decentralized Investment',
+      appUrl: 'https://dapp.cbindex.finance', // your app's url
       // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
     })
   )

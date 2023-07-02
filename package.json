@@ -44,7 +44,7 @@
     "react-collapse": "^5.1.1",
     "react-dom": "^18.2.0",
     "react-intl": "^6.4.4",
-    "react-quill": "^0.0.2",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.1.1",
     "react-spring": "^9.7.1",
     "react-three-fiber": "^5.3.22",
