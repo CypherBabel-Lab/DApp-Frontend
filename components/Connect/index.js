@@ -1,16 +1,19 @@
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrum, mainnet, polygon, arbitrumGoerli } from 'wagmi/chains'
 import {
-  Web3Button,
-  Web3Modal,
-  useWeb3ModalTheme,
-  Web3NetworkSwitch,
-} from '@web3modal/react'
-import { Button } from 'antd'
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+  arbitrum,
+  mainnet,
+  polygon,
+  arbitrumGoerli,
+  polygonMumbai,
+} from 'wagmi/chains'
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-import { IFundDeployer } from '../../data/abis/IFundDeployer'
+// import '@uniswap/widgets/dist/fonts.css'
+import {
+  ConnectKitProvider,
+  ConnectKitButton,
+  getDefaultConfig,
+} from 'connectkit'
 const daiAddress = '0x2662fA996a31A09A7987bf1fe218271B91cBAAfA'
 const daiAbi = [
   {
@@ -68,32 +71,12 @@ const daiAbi = [
     type: 'function',
   },
 ]
-const chains = [arbitrum, mainnet, polygon, arbitrumGoerli]
+// const chains = [arbitrum, mainnet, polygon, arbitrumGoerli, polygonMumbai]
 const projectId = 'bce62feae59107ac8ebbdc9aa8810513'
-
-const { publicClient } = configureChains(chains, [w3mProvider({ projectId })])
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors: w3mConnectors({ projectId, version: 1, chains }),
-  publicClient,
-})
-const ethereumClient = new EthereumClient(wagmiConfig, chains)
-
+let provider = ''
 const Connect = () => {
   const [signer, setSigner] = useState(null)
   const [daiContract, setDaiContract] = useState(null)
-  const { setTheme } = useWeb3ModalTheme()
-  function enCodeFunc(fee, address, contractAddressArray) {
-    const feeArray = ethers.utils.defaultAbiCoder.encode(
-      ['uint256', 'address'],
-      [fee, address]
-    )
-    const encodedBytes = ethers.utils.defaultAbiCoder.encode(
-      ['address[]', 'bytes[]'],
-      [[...contractAddressArray], [feeArray]]
-    )
-    return encodedBytes
-  }
   async function createNewFund() {
     const fee = ethers.utils.defaultAbiCoder.encode(
       ['uint256', 'address'],
@@ -105,8 +88,6 @@ const Connect = () => {
       ['address[]', 'bytes[]'],
       [['0x09d98A5bb4eC2deE15B35a5a0be051E1d62fFd8e'], [fee]]
     )
-    console.log(encodedBytes)
-
     const fundOwner = '0x0261bF3a2BA3539cB8dD455957C00248e19fE3E2' // 基金拥有者的地址
     const fundName = '123' // 基金名称
     const fundSymbol = '123' // 基金代号
@@ -130,46 +111,53 @@ const Connect = () => {
             { gasLimit: 21000000 }
           )
         const receipt = await transaction.wait()
-        console.log(receipt)
       }
     } catch (error) {
       console.log('交互错误:', error)
     }
   }
+  // const config = createConfig(
+  //   getDefaultConfig({
+  //     // Required API Keys
+  //     alchemyId: 'Ah1uBeiN9iaNdSMTMRPHMT2vp2-nkVel', // or infuraId
+  //     walletConnectProjectId: projectId,
+  //     // Required
+  //     appName: 'QWE',
+  //     // Optional
+  //     chains,
+  //     appDescription: 'Your App Description',
+  //     // appUrl: 'https://app.cbindex.finance', // your app's url
+  //     // appIcon: 'https://family.co/logo.png', // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  //   })
+  // )
+
   async function getSigner() {
     if (window.ethereum) {
       await window.ethereum.enable()
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
       setSigner(signer)
+      const address = await signer.getAddress()
+      localStorage.setItem('address', address)
       const contract = new ethers.Contract(daiAddress, daiAbi, provider)
       setDaiContract(contract)
     }
   }
   useEffect(() => {
-    setTheme({
-      themeMode: 'dark',
-      themeVariables: {
-        '--w3m-font-family': 'Roboto, sans-serif',
-        '--w3m-accent-color': '#F5841F',
-        '--w3m-background-color': 'rgb(20,20,20)',
-      },
-    })
     getSigner()
   }, [])
 
   return (
     <>
-      <Button onClick={() => createNewFund()}>创建基金</Button>
-      <WagmiConfig config={wagmiConfig}>
-        <Web3Button />
-        <Web3NetworkSwitch />
-      </WagmiConfig>
-      <Web3Modal
-        projectId={projectId}
-        themeMode="dark"
-        ethereumClient={ethereumClient}
-      />
+      {/* <div className="Uniswap"> */}
+      {/* <SwapWidget provider={provider} /> */}
+      {/* </div> */}
+      {/* <Button onClick={() => createNewFund()}>创建基金</Button> */}
+      {/* <WagmiConfig config={config}> */}
+      {/* <ConnectKitProvider> */}
+      {/* <ConnectKitButton /> */}
+      {/* </ConnectKitProvider>
+      </WagmiConfig> */}
     </>
   )
 }

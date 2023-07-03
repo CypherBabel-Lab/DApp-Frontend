@@ -25,7 +25,14 @@
     "**/*.tsx",
     "components/Connet/Walletconnet.tsx",
     "components/Connet/WalletconnetCom.tsx",
-    "components/Connet/tool.js"
-, "components/Nav.js", "components/MyWalletConnect/WalletConnect.js", "components/Scarf.js"  ],
+    "components/Connet/tool.js",
+    "components/Nav.js",
+    "components/MyWalletConnect/WalletConnect.js",
+    "components/Scarf.js",
+    "lib/constants.js",
+    "components/Price/index.jsx",
+    "components/Quote/index.jsx",
+    "pages/swap.jsx"
+, "pages/portfolio.jsx"  ],
   "exclude": ["node_modules"]
 }
