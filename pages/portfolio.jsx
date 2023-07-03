@@ -247,7 +247,7 @@ const PortfolioList = () => {
   const items = [
     {
       key: '1',
-      label: `Porfolio`,
+      label: `Portfolio`,
       children: <CurrentPositions assetsList={assetsList} />,
     },
     {

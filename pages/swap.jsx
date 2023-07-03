@@ -21,7 +21,7 @@ const Swap = () => {
       <Sidbar>
         {show && (
           <div
-            className={`flex min-h-screen flex-col items-center justify-between p-24`}
+            className={`flex flex-col items-center justify-between bg-zinc-800 p-24 rounded-lg`}
           >
             {finalize && price ? (
               <QuoteView

@@ -46,21 +46,21 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
   const { sendTransaction } = useSendTransaction(config)
 
   if (!quote) {
-    return <div>Getting best quote...</div>
+    return <div className='text-white'>Getting best quote...</div>
   }
 
   const sellTokenInfo =
     POLYGON_TOKENS_BY_ADDRESS[price.sellTokenAddress.toLowerCase()]
 
   return (
-    <div className="mx-auto max-w-screen-sm p-3 ">
+    <div className="max-w-screen-sm p-3 mx-auto ">
       <form>
-        <div className="mb-3 rounded-sm bg-slate-200 p-4 dark:bg-slate-800">
+        <div className="p-4 mb-3 rounded-sm bg-slate-200 dark:bg-slate-800">
           <div className="mb-2 text-xl text-white">You pay</div>
           <div className="flex items-center text-lg text-white sm:text-3xl">
             <img
               alt={sellTokenInfo.symbol}
-              className="mr-2 h-9 w-9 rounded-md"
+              className="mr-2 rounded-md h-9 w-9"
               src={sellTokenInfo.logoURI}
             />
             <span>
@@ -73,7 +73,7 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
           </div>
         </div>
 
-        <div className="mb-3 rounded-sm bg-slate-200 p-4 dark:bg-slate-800">
+        <div className="p-4 mb-3 rounded-sm bg-slate-200 dark:bg-slate-800">
           <div className="mb-2 text-xl text-white">You receive</div>
           <div className="flex items-center text-lg text-white sm:text-3xl">
             <img
@@ -81,7 +81,7 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
                 POLYGON_TOKENS_BY_ADDRESS[price.buyTokenAddress.toLowerCase()]
                   .symbol
               }
-              className="mr-2 h-9 w-9 rounded-md"
+              className="mr-2 rounded-md h-9 w-9"
               src={
                 POLYGON_TOKENS_BY_ADDRESS[price.buyTokenAddress.toLowerCase()]
                   .logoURI
@@ -105,7 +105,7 @@ export default function QuoteView({ price, quote, setQuote, takerAddress }) {
       </form>
 
       <button
-        className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
         onClick={() => {
           sendTransaction && sendTransaction()
         }}

@@ -8,8 +8,10 @@ const Footer = () => {
         CBIndex DApp Demo | Version 1.0.6 © 2023 CypherBabel Labs. All Rights
         Reserved.
       </div>
-      <div className="mt-8 font-bold text-gray-700">Important Disclaimer</div>
-      <div className="text-gray-700">
+      <div className="mt-8 text-sm font-bold text-gray-700">
+        Important Disclaimer
+      </div>
+      <div className="text-sm text-gray-700 ">
         The information, data, and services provided on the CBIndex platform are
         for informational purposes only and should not be considered as
         financial, investment, legal, or tax advice. CBIndex does not guarantee
