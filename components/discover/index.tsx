@@ -4,7 +4,7 @@ import Vaults from './Vaults'
 import Integrations from './Integrations'
 import Assets from './Assets'
 import Page from './Page'
-import Ducumentary from './Ducumentary'
+import CopyInvesting from './CopyInvesting'
 const Discover = () => {
   const router = useRouter()
   return (
@@ -13,7 +13,7 @@ const Discover = () => {
       {router.query.slug === 'vaults' && <Vaults />}
       {router.query.slug === 'integrations' && <Integrations />}
       {router.query.slug === 'assets' && <Assets />}
-      {router.query.slug === 'ducumentary' && <Ducumentary />}
+      {router.query.slug === 'CopyInvesting' && <CopyInvesting />}
     </>
   )
 }

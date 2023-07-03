@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.next
+.next/
 # lockfile
 package-lock.json
 
@@ -37,3 +39,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+node_modules

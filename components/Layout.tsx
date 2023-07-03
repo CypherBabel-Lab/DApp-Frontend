@@ -5,11 +5,12 @@ import Nav from './Nav.js'
 type LayoutProps = {
   hideHeader?: boolean
   hideFooter?: boolean
+  ConnectKitButton?: any
 }
 
-const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
+const Layout = ({ children, ConnectKitButton }: PropsWithChildren<LayoutProps>) => {
   useEffect(() => {
-    const key = localStorage.getItem('supabaseDarkMode')
+    const key = localStorage.getItem('cbindexDarkMode')
     if (!key) {
       document.documentElement.className = 'dark'
     } else {
@@ -19,8 +20,8 @@ const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
 
   return (
     <>
-      <Nav />
-      <div className="min-h-screen bg-zinc-900">
+      <Nav ConnectKitButton={ConnectKitButton} />
+      <div className="h-full bg-zinc-900">
         <main>{children}</main>
       </div>
       <Footer />

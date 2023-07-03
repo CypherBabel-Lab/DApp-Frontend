@@ -227,3 +227,62 @@ table {
 .sbui-typography a {
   @apply break-words;
 }
+.ql-container {
+  border: 1px solid #424242 !important;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.ql-toolbar {
+  border: 1px solid #424242 !important;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.ql-snow.ql-toolbar button:hover,
+.ql-snow .ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:focus,
+.ql-snow .ql-toolbar button:focus,
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow .ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow .ql-toolbar .ql-picker-item:hover,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+  color: #50d87e !important;
+}
+.ql-active {
+  color: #50d87e !important;
+}
+.ql-formats .ql-active .ql-stroke {
+  stroke: #50d87e !important; /* 替换为您希望的颜色值 */
+  /* 其他样式属性 */
+}
+.ql-formats .ql-active .ql-fill {
+  stroke: #50d87e !important; /* 替换为您希望的颜色值 */
+  /* 其他样式属性 */
+}
+.quill .ql-toolbar .ql-formats button:hover {
+  color: #50d87e !important;
+}
+.quill > .ql-toolbar > .ql-formats > button > .ql-stroke {
+  stroke: #50d87e !important;
+}
+.ql-snow .ql-stroke {
+  stroke: #42aa65;
+}
+.ql-formats button:hover {
+  svg .ql-stroke {
+    stroke: #42aa65 !important;
+  }
+  .ql-fill {
+    stroke: #42aa65;
+  }
+}
+.ql-formats .ql-header .ql-picker-label:hover {
+  .ql-stroke {
+    stroke: #42aa65 !important;
+  }
+}
