@@ -90,7 +90,7 @@ const CopyInvestingFundList = (props: any) => {
           runtime: '',
           roi: 0,
           pnl: 0,
-          nav: '',
+          nav: 0,
           peopleNum: 0,
           copyAddress: '',
           detaiAddress: '',
@@ -101,7 +101,7 @@ const CopyInvestingFundList = (props: any) => {
         tempt.runtime = getTimeDifference(d.data.list[i].CreatedAt)
         tempt.roi = 10.23
         tempt.pnl = 1088.52
-        tempt.nav = 150.50
+        tempt.nav = 150.5
         tempt.peopleNum = d.data.list[i].followers.length
         tempt.copyAddress = d.data.list[i].guardianAddress
         temp.push(tempt)
