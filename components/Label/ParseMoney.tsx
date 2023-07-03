@@ -1,6 +1,6 @@
 import React from 'react'
 import Statistic from 'antd/lib/statistic'
-const IintMoney = (props: any) => {
+const ParseMoney = (props: any) => {
   const { num, textColor, fontSize } = props
   return (
     <div className="flex">
@@ -17,4 +17,4 @@ const IintMoney = (props: any) => {
   )
 }
 
-export default IintMoney
+export default ParseMoney

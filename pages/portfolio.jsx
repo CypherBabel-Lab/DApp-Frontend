@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Skeleton, Avatar, Button, Tabs, InputNumber } from 'antd'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
+import ParseMoney from '~/components/Label/ParseMoney'
 // import type { TabsProps } from 'antd'
 import CurrentPositions from '~/components/protfolioTabs/CurrentPositions'
 import TradeHistory from '~/components/protfolioTabs/TradeHistory'
@@ -246,17 +247,17 @@ const PortfolioList = () => {
   const items = [
     {
       key: '1',
-      label: `Current Positions`,
+      label: `Porfolio`,
       children: <CurrentPositions assetsList={assetsList} />,
     },
     {
       key: '2',
-      label: `Trade History`,
+      label: `Activity`,
       children: <TradeHistory TradeHistoryList={TradeHistoryList} />,
     },
     {
       key: '3',
-      label: `Statistical Data`,
+      label: `Copy Investors`,
       children: <StatisticalData followersList={followersList} />,
     },
     // {
@@ -299,7 +300,7 @@ const PortfolioList = () => {
         console.log(receipt)
       }
     } catch (error) {
-      console.log('交互错误:', error)
+      console.log('Interaction Error:', error)
     }
   }
   const followEvt = async (address) => {
@@ -320,7 +321,7 @@ const PortfolioList = () => {
         const receipt = await transaction.wait()
       }
     } catch (error) {
-      console.log('交互错误:', error)
+      console.log('Interaction Error:', error)
     }
   }
   return (
@@ -332,66 +333,71 @@ const PortfolioList = () => {
               avatar={
                 <Image
                   src="/images/123.jpg"
-                  width={80}
-                  height={80}
+                  width={60}
+                  height={60}
                   style={{ borderRadius: '50%' }}
-                  alt="touxiang"
+                  alt="Avator"
                 />
               }
               title={carInfo.name}
               description={carInfo.owner}
             />
-            <div className="float-right flex  flex-col">
+            {/* <div className="flex flex-col float-right">
               <div>{vaultBaseAssetAddress}</div>
-              <div>Max:{Math.floor(userBalance * 10000) / 10000}</div>
-              <InputNumber
-                max={Math.floor(userBalance * 10000) / 10000}
-                min={0}
-                step={0.01}
-                onChange={setDepositAmount}
-              />
-              <Button style={{ float: 'right' }} onClick={() => DepositEvt()}>
-                Deposit
+              <div>{vaultBaseAssetAddress}</div>
+              <div>Max: {Math.floor(userBalance * 10000) / 10000}</div>
+              <div className="flex items-center">
+                <span className="mr-4">
+                  <InputNumber
+                    max={Math.floor(userBalance * 10000) / 10000}
+                    min={0}
+                    step={0.01}
+                    onChange={setDepositAmount}
+                  />
+                </span>
+
+                <a
+                  className="float-right text-emerald-500"
+                  onClick={() => DepositEvt()}
+                >
+                  Deposit
+                </a>
+              </div>
+            </div> */}
+            <div className="my-8 grid grid-cols-2 items-end gap-[16px] md:mb-[24px] md:mt-[24px] md:grid-cols-4 lg:grid-cols-4">
+              <div className="flex flex-col items-start mb-4">
+                <div className="text-2xl font-medium">
+                  <RiseFallLabel num={10.2} after={'%'} />
+                </div>
+                <div className="text-sm text-zinc-400">7D ROI</div>
+              </div>
+              <div lassName="flex flex-col items-start mb-4">
+                <div className="text-2xl font-medium">
+                  <ParseMoney num={101.11} fontSize="1.25rem" />
+                </div>
+                <div className="text-sm text-zinc-400">7D PNL (USD)</div>
+              </div>
+              <div lassName="flex flex-col items-start mb-4">
+                <div className="text-2xl font-medium">103</div>
+                <div className="text-sm text-zinc-400">Copy Investors</div>
+              </div>
+              <div lassName="flex flex-col items-start mb-4">
+                <div className="text-2xl font-medium">
+                  <ParseMoney num={150.5} fontSize="1.25rem" />
+                </div>
+                <div className="text-sm text-zinc-400">
+                  Net Asset Value (USD)
+                </div>
+              </div>
+            </div>
+            <div className="mt-8">
+              <Button
+                onClick={() => followEvt(carInfo.guardianAddress)}
+                className="w-full bg-zinc-900"
+              >
+                Copy
               </Button>
             </div>
-            <div className="mb-[12px] mt-[12px] grid grid-cols-2 items-end gap-[16px] md:mb-[24px] md:mt-[24px] md:grid-cols-3 lg:grid-cols-4">
-              <div>
-                <div className="text-t-sell text-[20px] font-medium">
-                  <RiseFallLabel num={10} after={'%'} />
-                </div>
-                <div className="text-t-third flex h-[24px] w-fit items-center justify-center text-[12px] text-zinc-400">
-                  7D ROI
-                </div>
-              </div>
-              <div>
-                <div className="text-t-sell text-[20px] font-medium">
-                  <RiseFallLabel num={101.11} />
-                </div>
-                <div className="text-t-third flex h-[24px] w-fit items-center justify-center text-[12px] text-zinc-400">
-                  7D PNL
-                </div>
-              </div>
-              <div>
-                <div className="text-t-sell text-[20px] font-medium">0.00</div>
-                <div className="text-t-third flex h-[24px] w-fit items-center justify-center text-[12px] text-zinc-400">
-                  7D Total Orders
-                </div>
-              </div>
-              <div>
-                <div className="text-t-sell text-[20px] font-medium">
-                  577,954.19
-                </div>
-                <div className="text-t-third flex h-[24px] w-fit items-center justify-center text-[12px] text-zinc-400">
-                  Portfolio Margin Balance (USDT)
-                </div>
-              </div>
-            </div>
-            <Button
-              onClick={() => followEvt(carInfo.guardianAddress)}
-              className="bn-button bn-button__primary data-size-middle button-primary float-right mb-[10px] h-[40px] w-full rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 text-white hover:opacity-75 md:mb-0 md:w-[180px] lg:w-[200px]"
-            >
-              Copy
-            </Button>
           </Skeleton>
         </Card>
         <Tabs

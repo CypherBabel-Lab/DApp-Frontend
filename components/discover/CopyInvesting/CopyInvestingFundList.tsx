@@ -2,7 +2,7 @@ import { Button, Card } from 'antd'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import RiseFallLabel from '~/components/Label/RiseFallLabel'
-import InitMoney from '~/components/Label/IintMoney'
+import InitMoney from '~/components/Label/ParseMoney'
 import { useRouter } from 'next/router'
 import { vault_listApi } from '../../../data/api/AllApi'
 import { ethers } from 'ethers'
@@ -101,7 +101,7 @@ const CopyInvestingFundList = (props: any) => {
         tempt.runtime = getTimeDifference(d.data.list[i].CreatedAt)
         tempt.roi = 10.23
         tempt.pnl = 1088.52
-        tempt.nav = 20000
+        tempt.nav = 150.50
         tempt.peopleNum = d.data.list[i].followers.length
         tempt.copyAddress = d.data.list[i].guardianAddress
         temp.push(tempt)
