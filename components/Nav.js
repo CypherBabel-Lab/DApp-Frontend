@@ -90,7 +90,7 @@ const Nav = ({ ConnectKitButton }) => {
               <span className="text-2xl font-semibold text-white">
                 CBIndex DApp
               </span>
-              <span className="px-2 text-sm text-white">DEMO</span>
+              <span className="px-2 text-xs text-white">DEMO</span>
             </div>
           </div>
         </Link>

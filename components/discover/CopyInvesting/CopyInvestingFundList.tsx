@@ -55,8 +55,9 @@ const CopyInvestingFundList = (props: any) => {
     const days = Math.floor(hours / 24)
 
     // 构建时间差字符串
-    const timeDiffString = `${days}天 ${hours % 24}小时 ${minutes % 60}分钟 ${seconds % 60
-      }秒`
+    const timeDiffString = `${days}d ${hours % 24}h ${minutes % 60}m ${
+      seconds % 60
+    }s`
 
     return timeDiffString
   }
@@ -64,7 +65,6 @@ const CopyInvestingFundList = (props: any) => {
     setTimeout(() => {
       setCarLoading(false)
     }, 1500)
-
   }, [])
   useEffect(() => {
     // getSigner()
@@ -79,7 +79,7 @@ const CopyInvestingFundList = (props: any) => {
           runtime: string // 或者使用适当的日期/时间类型
           roi: number
           pnl: number
-          nav: string // 或者使用适当的数字类型
+          nav: number // 或者使用适当的数字类型
           peopleNum: number
           copyAddress: string
           detaiAddress: string
@@ -99,9 +99,9 @@ const CopyInvestingFundList = (props: any) => {
         tempt.address = d.data.list[i].owner
         tempt.detaiAddress = d.data.list[i].address
         tempt.runtime = getTimeDifference(d.data.list[i].CreatedAt)
-        tempt.roi = 10
-        tempt.pnl = 10
-        tempt.nav = '10'
+        tempt.roi = 10.23
+        tempt.pnl = 1088.52
+        tempt.nav = 20000
         tempt.peopleNum = d.data.list[i].followers.length
         tempt.copyAddress = d.data.list[i].guardianAddress
         temp.push(tempt)
@@ -136,15 +136,13 @@ const CopyInvestingFundList = (props: any) => {
           return (
             <Card
               style={{
-                width: 234,
-                height: 274,
-                marginTop: 36,
-                marginLeft: 16,
+                width: '300px',
+                height: '360px',
+                margin: '12px 8px',
                 cursor: 'pointer',
-                // backgroundColor: 'rbg(0,0,0,0.5)',
               }}
               hoverable={true}
-              className="border bg-zinc-800 hover:border-emerald-400"
+              className="bg-zinc-800 hover:bg-zinc-700"
               loading={carLoading}
               key={it.name}
             >
@@ -161,56 +159,56 @@ const CopyInvestingFundList = (props: any) => {
               >
                 <div className="flex">
                   <div> {it.headsculpture}</div>
-                  <div className="flex flex-col ml-3">
+                  <div className="flex flex-col mb-4">
                     <span className="text-xl font-bold text-zinc-100">
                       {it.name}
                     </span>
-                    <span className="font-semibold text-zinc-400">
+                    <span className="mb-2 text-xs font-semibold text-neutral-500">
                       {splitString(it.address)}
                     </span>
-                    <div className="flex">
-                      <Image
-                        src="/images/people.png"
-                        width={20}
-                        height={20}
-                        alt="img"
-                      />
-                      <span className="font-semibold">{it.peopleNum}</span>
+                    <div>
+                      <div className="font-semibold">{it.runtime}</div>
+                      <div className="text-xs font-semibold text-neutral-500">
+                        Since Inception
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div className="flex justify-around">
+                {/* Statistics */}
+                <div className="my-8">
+                  <div className="flex justify-between">
                     <div>
-                      <div className="text-2xl font-semibold">
+                      <div className="text-xl font-semibold">
                         <RiseFallLabel num={it.roi} after={'%'} />
                       </div>
-                      <div className="text-xs font-semibold text-neutral-400">
+                      <div className="text-xs font-semibold text-neutral-500">
                         30D ROI
                       </div>
                     </div>
                     <div>
-                      <div className="text-2xl font-semibold">
-                        <RiseFallLabel num={it.pnl} />
+                      <div className="text-xl font-semibold">
+                        <InitMoney num={it.pnl} fontSize="1.25rem" />
                       </div>
-                      <div className="text-xs font-semibold text-neutral-400">
+                      <div className="text-xs font-semibold text-neutral-500">
                         30D PNL
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-around mt-3">
+                  <div className="flex justify-between mt-3">
                     <div>
-                      <span className="text-2xl font-semibold">
-                        <InitMoney num={it.nav} />
+                      <span className="text-xl font-semibold">
+                        <InitMoney num={it.nav} fontSize="1.25rem" />
                       </span>
-                      <div className="text-xs font-semibold text-neutral-400">
-                        Nav
+                      <div className="text-xs font-semibold text-neutral-500">
+                        NAV
                       </div>
                     </div>
                     <div>
-                      <div className="font-semibold">{it.runtime}</div>
-                      <div className="text-xs font-semibold text-neutral-400">
-                        Runtime
+                      <div className="text-xl font-semibold">
+                        <RiseFallLabel num={it.peopleNum} />
+                      </div>
+                      <div className="text-xs font-semibold text-neutral-500">
+                        Copy Investors
                       </div>
                     </div>
                   </div>
@@ -219,11 +217,11 @@ const CopyInvestingFundList = (props: any) => {
               <Meta
                 description={
                   <Button
-                    style={{ lineHeight: '16px', float: 'right' }}
-                    className="px-4 py-2 text-white rounded-md bg-gradient-to-r from-gray-800 to-black hover:opacity-90"
+                    // className="float-right rounded-[6px] bg-zinc-900 p-4 text-white group-hover:scale-105"
+                    className="float-right bg-zinc-900"
                     onClick={() => follow(it.copyAddress)}
                   >
-                    <span className="font-bold">Copy</span>
+                    Copy
                   </Button>
                 }
               />

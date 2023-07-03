@@ -3,14 +3,14 @@ const RiseFallLabel = (props: any) => {
   const { num, after } = props
   if (num >= 0) {
     return (
-      <div style={{ color: 'rgb(12, 192, 127)' }}>
+      <div>
         {num}
         {after}
       </div>
     )
   } else {
     return (
-      <div style={{ color: 'rgb(255, 77, 79)' }}>
+      <div>
         {num}
         {after}
       </div>
