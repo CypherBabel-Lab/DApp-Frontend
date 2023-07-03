@@ -100,25 +100,25 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
   return (
     <form>
       {/* <h1 className="mb-4 text-3xl font-bold">0x Swap API Demo</h1> */}
-      <p className="mb-2 text-gray-900 text-md">
+      <p className="text-md mb-2 text-gray-900">
         Check out the{' '}
         <a href="https://0x.org/docs/" className="text-green-400">
           0x Docs
         </a>{' '}
         and <a href="https://0x.org/docs/">Code</a> to build your own
       </p>
-      <p className="mb-2 font-bold text-white text-gray-900 text-md ">
+      <p className="text-md mb-2 font-bold text-gray-900 text-white ">
         Polygon Network
       </p>
-      <div className="p-4 mb-3 rounded-md bg-slate-200 dark:bg-slate-800">
-        <section className="flex items-start justify-center mt-4">
+      <div className="mb-3 rounded-md bg-slate-200 p-4 dark:bg-slate-800">
+        <section className="mt-4 flex items-start justify-center">
           <label htmlFor="sell-select" className="sr-only"></label>
           <div>
             <img
               alt={sellToken}
               width={36}
               height={36}
-              className="mr-2 rounded-md h-9 w-9"
+              className="mr-2 h-9 w-9 rounded-md"
               src={POLYGON_TOKENS_BY_SYMBOL[sellToken].logoURI}
             />
           </div>
@@ -128,7 +128,7 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
               value={sellToken}
               name="sell-token-select"
               id="sell-token-select"
-              className="mr-2 rounded-md w-50 h-9 sm:w-full"
+              className="w-50 mr-2 h-9 rounded-md sm:w-full"
               onChange={handleSellTokenChange}
             >
               {/* <option value="">--Choose a token--</option> */}
@@ -148,7 +148,7 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
           <input
             id="sell-amount"
             value={sellAmount}
-            className="rounded-md h-9"
+            className="h-9 rounded-md"
             style={{ border: '1px solid black' }}
             onChange={(e) => {
               setTradeDirection('sell')
@@ -156,18 +156,19 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
             }}
           />
         </section>
-        <section className="flex items-start justify-center mt-4 mb-6">
+        <section className="mb-6 mt-4 flex items-start justify-center">
           <label htmlFor="buy-token" className="sr-only"></label>
           <img
             alt={buyToken}
-            className="mr-2 rounded-md h-9 w-9"
+            style={{ width: '36px' }}
+            className="mr-2 h-9 w-9 rounded-md"
             src={POLYGON_TOKENS_BY_SYMBOL[buyToken].logoURI}
           />
           <select
             name="buy-token-select"
             id="buy-token-select"
             value={buyToken}
-            className="mr-2 rounded-md w-50 h-9 sm:w-full"
+            className="w-50 mr-2 h-9 rounded-md sm:w-full"
             onChange={(e) => handleBuyTokenChange(e)}
           >
             {/* <option value="">--Choose a token--</option> */}
@@ -183,7 +184,7 @@ export default function PriceView({ setPrice, setFinalize, takerAddress }) {
           <input
             id="buy-amount"
             value={buyAmount}
-            className="bg-white rounded-md cursor-not-allowed h-9"
+            className="h-9 cursor-not-allowed rounded-md bg-white"
             style={{ border: '1px solid black' }}
             disabled
             onChange={(e) => {
@@ -275,7 +276,7 @@ function ApproveOrReviewButton({ takerAddress, onClick, sellTokenAddress }) {
       <>
         <button
           type="button"
-          className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+          className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           onClick={async () => {
             const writtenValue = await approveAsync()
           }}
@@ -290,7 +291,7 @@ function ApproveOrReviewButton({ takerAddress, onClick, sellTokenAddress }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+      className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
     >
       Review Trade
     </button>
